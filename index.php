@@ -24,24 +24,7 @@
 
 // ------------------------------------------------------------------
 
-// Inspiration from the beautiful stylings of cramberry.net.
-
-// Browser support: Firefox 3.5+, Chrome 2+, Safari 4+, and MSIE 8+.
-
-// All set data is loaded into a Javascript array, so there are no Ajax server requests needed after
-// the initial page load.
-
-// All memorization data is stored locally in a database, based on this short and simple jQuery plugin:
-// http://www.stoimen.com/blog/2010/02/25/jquery-localstorage-plugin/
-
-// Uses the SM2 algorithm for spaced interval memorization:
-// http://www.supermemo.com/english/ol/sm2.htm
-// NOTE: Interval spacing has not been implemented yet - 'last seen' timestamps are recorded, but that's it.
-
-// How to Use:
-// 1) Create CSV files (format: question, answer) and save them in the 'sets' sub-directory.
-// 2) Load this script in a browser.
-// 3) Done!
+// See the README (README.markdown) for more information.
 
 ini_set('auto_detect_line_endings', true);
 
