@@ -113,6 +113,7 @@ $nav = new Navigation;
 <!DOCTYPE html>
 <html>
 <head>
+<meta name = "viewport" content = "width = 660">
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
 <link href="/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/css/study.css" rel="stylesheet" type="text/css" />
@@ -148,7 +149,6 @@ if (count($nav->study_set['questions']) > 0) {
 <div id="reset-database" style="display: none;">
 	<a href="#">reset progress</a>
 </div>
-<div id="container">
 <?php
 
 	if ($nav->action == 'choose') {
@@ -167,41 +167,40 @@ if (count($nav->study_set['questions']) > 0) {
 		echo "</div>\n";
 	} elseif ($nav->action == 'study') {
 ?>
-	<div id="progress-bar" style="display: none;">
-	</div>
-	<div id="stop-it">
-		<a href="./">stop studying</a>
-	</div>
-	<div id="question-box">
-		<div id="question-content">
-			sorry, but you need to enable javascript for this to work.
-		</div>
-		<div id="question-controls">
-			<form>
-				<button id="show-answer">click here or press (space) to show answer</button>
-			</form>
-		</div>
-	</div>
-
-	<div id="answer-box">
-		<div id="answer-content">
-			loading answer...
-		</div>
-		<div id="answer-controls">
-			<form action="#">
-				<fieldset>
-					<button class="b1 sbad scorebutton" id="1">no clue ( J )</button>
-					<button class="b2 sbad scorebutton" id="2">poor ( K )</button>
-					<button class="b3 scorebutton sgood" id="3">fair ( L )</button>
-					<button class="b5 scorebutton sgood" id="5">perfect ( ; )</button>
-				</fieldset>
-			</form>
-		</div>
-	</div>
-
-	<div id="debug" style="font-size: 1.5em;">
-	</div>
-<?php } ?>
+<div id="progress-bar" style="display: none;">
 </div>
+<div id="stop-it">
+	<a href="./">stop studying</a>
+</div>
+<div id="question-box">
+	<div id="question-content">
+		sorry, but you need to enable javascript for this to work.
+	</div>
+	<div id="question-controls">
+		<form>
+			<button id="show-answer">click here or press (space) to show answer</button>
+		</form>
+	</div>
+</div>
+
+<div id="answer-box">
+	<div id="answer-content">
+		loading answer...
+	</div>
+	<div id="answer-controls">
+		<form action="#">
+			<fieldset>
+				<button class="b1 sbad scorebutton" id="1">no clue ( J )</button>
+				<button class="b2 sbad scorebutton" id="2">poor ( K )</button>
+				<button class="b3 scorebutton sgood" id="3">fair ( L )</button>
+				<button class="b5 scorebutton sgood" id="5">perfect ( ; )</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<div id="debug" style="font-size: 1.5em;">
+</div>
+<?php } ?>
 </body>
 </html>
