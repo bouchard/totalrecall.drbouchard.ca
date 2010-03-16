@@ -58,20 +58,17 @@ h1 {
 	background-color: #f3f3f3;
 }
 
-/* Study UI. */
-
-.b0, .b2, .b3, .b5 {
+.b1, .b2, .b3, .b5 {
   width: 161px;
   padding: 0;
 }
 
-.b0 { background-image: url(/images/0_button.gif); }
+.b1 { background-image: url(/images/1_button.gif); }
 .b2 { background-image: url(/images/2_button.gif); }
 .b3 { background-image: url(/images/3_button.gif); }
 .b5 { background-image: url(/images/5_button.gif); }
 
 /* Progress bar. */
-
 #progress-bar {
 	margin-top: 30px;
 	border: 1px solid #eee;
@@ -119,6 +116,7 @@ h1 {
 #answer-content { border-color: #fa931e; }
 #answer-box { display: none; }
 
+/* Buttons. */
 #question-controls, #answer-controls { margin-top: 10px; }
 
 button {
@@ -141,6 +139,7 @@ form,fieldset {
 	background-image: url(/images/show_answer_button.gif);
 }
 
+/* 'Reset progress?' link. */
 #reset-database {
 	position: absolute;
 	top: 0px;
