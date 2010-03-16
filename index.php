@@ -143,7 +143,10 @@ $nav = new Navigation;
 <?php if ($nav->action == 'choose') : ?>
 	$(document).ready(function() {
 		$('#set_list ul li a').each(function() {
-			$(this).html($(this).html() + ' ' + ($.getItem($(this).attr('rel') + '_progress') || 0) + '%');
+			$(this).html($(this).html() + ' ' +
+			($.getItem($(this).attr('rel') + '_progress') || 0) + '%' + ' ' +
+			($.getItem($(this).attr('rel') + '_card_count') ? ('(' + $.getItem($(this).attr('rel') + '_card_count') + ' cards)') : '')
+			);
 		});
 	});
 <?php endif; ?>
