@@ -39,9 +39,14 @@ $(function() {
 	function start_it_up() {
 		// If we are in 'study' mode.
 		if ($('#question-content').length != 0) {
+			store_total_card_count();
 			load_new_card();
 			show_reset_button();
 		}
+	}
+
+	function store_total_card_count() {
+		$.setItem($set_id + '_card_count', $fc_data.length);
 	}
 
 	function show_reset_button() {
@@ -103,16 +108,22 @@ $(function() {
 		}
 	}
 
+	// Cards are selected randomly for now, easiness factor, or 'quality', is only for the progress bar
+	// at the moment.
+	// If someone knows a better way to do this (other than enforcing spaced intervals asper SuperMemo 2),
+	// I'd love to see it.
+	// Perhaps even building in a weighted selection based on the easiness of each card, and de-weighting
+	// based on the frequency that the card has previously been shown this session.
 	function select_next_card() {
-		if ($cards_left.length == 0) {
-			return Math.floor(Math.random() * $fc_data.length);
-		}
-		$next_index = $cards_left[Math.floor(Math.random() * $cards_left.length)];
-		if ($next_index == $curr_index) {
-			return Math.floor(Math.random() * $fc_data.length);
-		} else {
-			return $next_index;
-		}
+ 		if ($cards_left.length == 0) {
+ 			return Math.floor(Math.random() * $fc_data.length);
+ 		}
+ 		$next_index = $cards_left[Math.floor(Math.random() * $cards_left.length)];
+ 		if ($next_index == $curr_index) {
+ 			return Math.floor(Math.random() * $fc_data.length);
+ 		} else {
+ 			return $next_index;
+ 		}
 	}
 
 	function save_card_data($quality) {
@@ -130,6 +141,7 @@ $(function() {
 		if (!$progress)
 			$progress = $.getItem($set_id + '_progress') || 0;
 		$('#progress-bar').html($progress + '%');
+		$('#debug').html(JSON.stringify($db));
 	}
 
 	function store_data() {
