@@ -29,7 +29,7 @@ $(function() {
 	$(document).keypress(function(e) {
 		switch(e.which) {
 			case 32: $('#show-answer').click(); return false; break;
-			case 106: $('#0').click(); return false; break;
+			case 106: $('#1').click(); return false; break;
 			case 107: $('#2').click(); return false; break;
 			case 108: $('#3').click(); return false; break;
 			case 59: $('#5').click(); return false; break;
@@ -40,7 +40,7 @@ $(function() {
 		// If we are in 'study' mode.
 		if ($('#question-content').length != 0) {
 			store_total_card_count();
-			load_new_card();
+			load_next_card();
 			show_reset_button();
 		}
 	}
@@ -61,12 +61,12 @@ $(function() {
 		});
 	}
 
-	function load_new_card() {
+	function load_next_card() {
 		cards_left_to_repeat();
 		update_progress_bar();
 		$curr_index = select_next_card();
-		$('#question-content').html($fc_data[$curr_index][0]);
-		$('#answer-content').html($fc_data[$curr_index][1]);
+		$('#question-content').html($fc_data[$curr_index][0].replace(/\r|\n/gi, "<br />"));
+		$('#answer-content').html($fc_data[$curr_index][1].replace(/\r|\n/gi, "<br />"));
 		$('#question-box').show();
 	}
 
@@ -77,7 +77,7 @@ $(function() {
 	}
 
 	$('#show-answer').click(function() {
-		if($('#answer-box').css('display')=="none") {
+		if($('#answer-box').css('display') == 'none') {
 			$('#question-box').hide();
 			$('#answer-box').show();
 		}
@@ -85,10 +85,10 @@ $(function() {
 	});
 
 	$('.scorebutton').click(function() {
-		if($('#answer-box').css('display')=="none") { return false; }
+		if($('#answer-box').css('display') == 'none') { return false; }
 		$('#answer-box').hide();
 		save_card_data(this.id);
-		load_new_card();
+		load_next_card();
 		return false;
 	});
 

@@ -207,7 +207,7 @@ if (count($nav->study_set['questions']) > 0) {
 		<div id="answer-controls">
 			<form action="#">
 				<fieldset>
-					<button class="b0 sbad scorebutton" id="0">no clue ( J )</button>
+					<button class="b1 sbad scorebutton" id="1">no clue ( J )</button>
 					<button class="b2 sbad scorebutton" id="2">poor ( K )</button>
 					<button class="b3 scorebutton sgood" id="3">fair ( L )</button>
 					<button class="b5 scorebutton sgood" id="5">perfect ( ; )</button>
