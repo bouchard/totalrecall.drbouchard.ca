@@ -34,11 +34,10 @@ $(function() {
 	function show_reset_button() {
 		$('#reset-database').show();
 		$('#reset-database').click(function() {
-			$.setItem($set_id, 0);
-			$.setItem($set_id + '_progress', 0);
-			progress = null;
+			$.setItem($set_id, null);
+			$.setItem($set_id + '_card_counts', null);
 			$db = null;
-			update_progress_bar();
+			start_it_up();
 			return false;
 		});
 	}
@@ -48,6 +47,7 @@ $(function() {
 		index = select_next_card();
 		$('#question-content').html($fc[index][0].replace(/\r|\n/gi, "<br />"));
 		$('#answer-content').html($fc[index][1].replace(/\r|\n/gi, "<br />"));
+		$('#answer-box').hide();
 		$('#question-box').show();
 	}
 
