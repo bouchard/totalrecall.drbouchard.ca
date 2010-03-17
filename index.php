@@ -1,9 +1,10 @@
 <?php
 
-// Total Recall - Flash Card App.
+// Total Recall - the flash card webapp.
 // Stand-alone PHP script for Flash Cards with a Javascript interface and logic.
 // By: Brady Bouchard
 // brady@bradybouchard.ca
+// Available at: http://github.com/brady8/total-recall
 
 // ------------------------------------------------------------------
 
@@ -115,21 +116,21 @@ $nav = new Navigation;
 <head>
 <meta name = "viewport" content = "width = 660">
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
-<link href="/css/base.css" rel="stylesheet" type="text/css" />
-<link href="/css/study.css" rel="stylesheet" type="text/css" />
-<script src="/js/json.js" type="text/javascript"></script>
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="/js/jquery.jstore.js" type="text/javascript"></script>
-<script src="/js/study.js" type="text/javascript"></script>
+<link href="css/base.css" rel="stylesheet" type="text/css" />
+<link href="css/study.css" rel="stylesheet" type="text/css" />
+<script src="js/json.js" type="text/javascript"></script>
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.cookie.js" type="text/javascript"></script>
+<script src="js/jquery.jstore.js" type="text/javascript"></script>
+<script src="js/study.js" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
 <?php if ($nav->action == 'choose') : ?>
 	$(document).ready(function() {
 		$('#set_list ul li a').each(function() {
-			$(this).html($(this).html() + ' ' +
-			($.getItem($(this).attr('rel') + '_progress') || 0) + '%' + ' ' +
-			($.getItem($(this).attr('rel') + '_card_count') ? ('(' + $.getItem($(this).attr('rel') + '_card_count') + ' cards)') : '')
+			$(this).html('<strong>' + $(this).html() + '</strong> &nbsp;' + ($.getItem($(this).attr('rel') + '_card_counts') ?
+			(100 - (100 * $.getItem($(this).attr('rel') + '_card_counts')[0] / $.getItem($(this).attr('rel') + '_card_counts')[1])) + '%' + ' ' +
+			($.getItem($(this).attr('rel') + '_card_counts') ? ('(' + $.getItem($(this).attr('rel') + '_card_counts')[0] + ' of ' + $.getItem($(this).attr('rel') + '_card_counts')[1] + ' cards left today)') : '') : '')
 			);
 		});
 	});
@@ -137,7 +138,7 @@ $nav = new Navigation;
 <?php if ($nav->action == 'study') : ?>
 <?php
 if (count($nav->study_set['questions']) > 0) {
-	echo "var \$fc_data = " . json_encode($nav->study_set['questions']) . ";\n";
+	echo "var \$fc = " . json_encode($nav->study_set['questions']) . ";\n";
 	echo "var \$set_id = " . json_encode($_SERVER['QUERY_STRING']) . ";\n";
 }
 ?>
