@@ -1,30 +1,15 @@
-// ------------------------------------------------------------------
-
-// This file is a part of Total Recall.
-
-// Copyright Brady Bouchard 2010.
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-// ------------------------------------------------------------------
+/* This file is a part of Total Recall, the flash card webapp.
+   Copyright Brady Bouchard 2010.
+   Available at: http://github.com/brady8/total-recall
+   See the README (README.markdown) for more information. */
 
 $(function() {
 
-	var $curr_index;
-	var $cards_left;
-	var $db;
-	var $progress;
+	var index; // Current card displayed.
+	var cards_left_today; // Number of cards left to study today.
+	var cards_unlearned; // Cards with an EF < 4.0.
+	var $db; // The database (stores easiness factor and next study date).
+	var progress; // Progress (percentage) for today.
 
 	$(document).keypress(function(e) {
 		switch(e.which) {
@@ -37,16 +22,13 @@ $(function() {
 	});
 
 	function start_it_up() {
-		// If we are in 'study' mode.
+		// Are we in 'study' mode?
 		if ($('#question-content').length != 0) {
-			store_total_card_count();
+			load_data();
+			populate_cards_for_today();
 			load_next_card();
 			show_reset_button();
 		}
-	}
-
-	function store_total_card_count() {
-		$.setItem($set_id + '_card_count', $fc_data.length);
 	}
 
 	function show_reset_button() {
@@ -54,7 +36,7 @@ $(function() {
 		$('#reset-database').click(function() {
 			$.setItem($set_id, 0);
 			$.setItem($set_id + '_progress', 0);
-			$progress = null;
+			progress = null;
 			$db = null;
 			update_progress_bar();
 			return false;
@@ -62,11 +44,10 @@ $(function() {
 	}
 
 	function load_next_card() {
-		cards_left_to_repeat();
 		update_progress_bar();
-		$curr_index = select_next_card();
-		$('#question-content').html($fc_data[$curr_index][0].replace(/\r|\n/gi, "<br />"));
-		$('#answer-content').html($fc_data[$curr_index][1].replace(/\r|\n/gi, "<br />"));
+		index = select_next_card();
+		$('#question-content').html($fc[index][0].replace(/\r|\n/gi, "<br />"));
+		$('#answer-content').html($fc[index][1].replace(/\r|\n/gi, "<br />"));
 		$('#question-box').show();
 	}
 
@@ -92,74 +73,123 @@ $(function() {
 		return false;
 	});
 
-	function cards_left_to_repeat() {
-		$cards_left = [];
-		load_data();
+	function populate_cards_for_today() {
+		cards_left_today = [];
+		cards_unlearned = [];
 		if ($db) {
-			for($i in $fc_data) {
-				if (!$db[$i] || !parseFloat($db[$i][0]) || parseFloat($db[$i][0]) < 4.0) {
-					$cards_left.push($i);
+			for(i in $fc) {
+				if ($db[i] && $db[i]['next_date']) {
+					next_date = new Date(Date.parse($db[i]['next_date']));
+					curr_date = new Date();
+					if (next_date.toDateString() == curr_date.toDateString())
+						cards_left_today.push(parseInt(i));
+				} else {
+					cards_left_today.push(parseInt(i));
+				}
+				if ($db[i] && $db[i]['ef']) {
+					if ($db[i]['ef'] < 4.0)
+						cards_unlearned.push(parseInt(i));
+				} else {
+					cards_unlearned.push(parseInt(i));
 				}
 			}
 		} else {
-			for ($i in $fc_data) {
-				$cards_left.push($i);
+			for (i in $fc) {
+				cards_left_today.push(parseInt(i));
+				cards_unlearned.push(parseInt(i));
 			}
 		}
 	}
 
-	// Cards are selected randomly for now, easiness factor, or 'quality', is only for the progress bar
-	// at the moment.
-	// If someone knows a better way to do this (other than enforcing spaced intervals asper SuperMemo 2),
-	// I'd love to see it.
-	// Perhaps even building in a weighted selection based on the easiness of each card, and de-weighting
-	// based on the frequency that the card has previously been shown this session.
+	// The next card is selected from cards that need to be reviewed today, as based on the
+	// SM2 algorithm. If we're out of cards to review for today, then we choose from any cards
+	// that have an easiness factor less than 4. Once that list is exhausted, then we fall back
+	// to choosing cards at random.
 	function select_next_card() {
- 		if ($cards_left.length == 0) {
- 			return Math.floor(Math.random() * $fc_data.length);
- 		}
- 		$next_index = $cards_left[Math.floor(Math.random() * $cards_left.length)];
- 		if ($next_index == $curr_index) {
- 			return Math.floor(Math.random() * $fc_data.length);
+ 		if (cards_left_today.length == 0) {
+			if (cards_unlearned.length == 0) {
+ 				next_index = Math.floor(Math.random() * $fc.length);
+			} else {
+				next_index = cards_unlearned[Math.floor(Math.random() * cards_unlearned.length)];
+			}
  		} else {
- 			return $next_index;
- 		}
+			next_index = cards_left_today[Math.floor(Math.random() * cards_left_today.length)];
+		}
+		// Don't show the same card twice.
+ 		while (next_index == index && $fc.length > 1) {
+ 			next_index = Math.floor(Math.random() * $fc.length);
+		}
+		return next_index;
 	}
 
-	function save_card_data($quality) {
-		$quality = parseInt($quality);
-		load_data();
-		if (!$db[$curr_index]) { $db[$curr_index] = [2.5, null]; }
-		$db[$curr_index][0] = parseFloat($db[$curr_index][0]) + (0.1 - (5 - $quality) * (0.08 + (5 - $quality) * 0.02));
-		if ($db[$curr_index][0] < 1.3) { $db[$curr_index][0] = 1.3; }
-		$db[$curr_index][1] = (new Date()).toLocaleString();
-		store_data();
+	function save_card_data(quality) {
+		quality = parseInt(quality);
+		if ($db) {
+			if (!$db[index]) {
+				$db[index] = {'ef' : 2.5, 'next_date' : null, 'reps' : 0, 'interval' : 0 };
+			}
+			$db[index]['ef'] = parseFloat($db[index]['ef']) + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+			if ($db[index]['ef'] < 1.3) { $db[index]['ef'] = 1.3; }
+			if (quality < 3) {
+				$db[index]['reps'] = 1;
+			} else {
+				$db[index]['reps'] += 1;
+			}
+			interval = calculate_interval($db[index]['reps'], quality, $db[index]['interval']);
+			$db[index]['interval'] = interval;
+			one_day = 1000 * 60 * 60 * 24;
+			next_date = new Date();
+			next_date.setTime(next_date.getTime() + one_day * interval);
+			$db[index]['next_date'] = next_date.toDateString();
+			if (cards_left_today.indexOf(index) != -1) {
+				cards_left_today.splice(cards_left_today.indexOf(index), 1);
+			}
+			if ($db[index]['ef'] >= 4.0) {
+				if (cards_unlearned.indexOf(index) != -1) {
+					cards_unlearned.splice(cards_unlearned.indexOf(index), 1);
+				}
+			} else {
+				if (cards_unlearned.indexOf(index) == -1) {
+					cards_unlearned.push(parseInt(index));
+				}
+			}
+			store_data();
+		}
+	}
+
+	// SM2 Algorithm for calculating intervals.
+	function calculate_interval(reps, q, i) {
+		if (reps == 1)
+			return 1;
+		else if (reps == 2)
+			return 6;
+		else {
+			return (i * q > 60) ? 60 : parseInt(i * q);
+		}
 	}
 
 	function update_progress_bar() {
 		$('#progress-bar').show();
-		if (!$progress)
-			$progress = $.getItem($set_id + '_progress') || 0;
-		$('#progress-bar').html($progress + '%');
-		$('#debug').html(JSON.stringify($db));
+		calculate_progress();
+		$('#progress-bar').html(progress + '%');
+		$('#debug').html('DB: ' + JSON.stringify($db) + "<br>" +
+		'cards_left_today: ' + JSON.stringify(cards_left_today) + "<br>" +
+		'cards_unlearned: ' + JSON.stringify(cards_unlearned));
 	}
 
 	function store_data() {
-		calculate_progress();
+		$.setItem($set_id + '_card_counts', [cards_left_today.length, $fc.length]);
 		$.setItem($set_id, $db);
-		$.setItem($set_id + '_progress', $progress || 0);
 	}
 
 	function calculate_progress() {
-		$sum = 0.0;
-		for($i in $fc_data) {
-			if ($db[$i] && $db[$i][0]) {
-				$sum += parseFloat($db[$i][0]);
-			} else {
-				$sum += 1.3;
-			}
+		if (cards_left_today && cards_left_today.length > 0) {
+			progress = parseInt(100 - (100 * (cards_left_today.length / $fc.length)));
+		} else if (cards_left_today) {
+			progress = 100;
+		} else {
+			progress = 0;
 		}
-		$progress = Math.min(parseInt(100 * ( ($sum - 1.3 * $fc_data.length)/((4.0 - 1.3) * $fc_data.length) )), 100);
 	}
 
 	function load_data() {
