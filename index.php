@@ -54,7 +54,7 @@ class CSV {
 
 	function open_study_set($filename) {
 		$csv_data = array();
-		if (($handle = fopen($this->directory . $filename . '.csv', "r")) !== false) {
+		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "r")) !== false) {
 		    while (($data = fgetcsv($handle)) !== false) {
 				$csv_data[] = array($data[0], $data[1]);
 		    }
@@ -66,7 +66,7 @@ class CSV {
 	}
 
 	function humanize($str) {
-		return ucwords(preg_replace('/[-_+]/i', ' ', $str));
+		return ucwords(preg_replace('/[_+]/i', ' ', $str));
 	}
 
 }
@@ -159,7 +159,7 @@ if (count($nav->study_set['questions']) > 0) {
 		if (count($file_list) > 0) {
 			echo "<ul>\n";
 			foreach ($file_list as $file) {
-				echo "<li><a href=\"?" . pathinfo($file, PATHINFO_FILENAME) . "\" rel=\"" . pathinfo($file, PATHINFO_FILENAME) . "\">" . $nav->csv->humanize(pathinfo($file, PATHINFO_FILENAME)) . "</a></li>\n";
+				echo "<li><a href=\"?" . urlencode(pathinfo($file, PATHINFO_FILENAME)) . "\" rel=\"" . urlencode(pathinfo($file, PATHINFO_FILENAME)) . "\">" . $nav->csv->humanize(pathinfo($file, PATHINFO_FILENAME)) . "</a></li>\n";
 			}
 			echo "</ul>\n";
 		} else {
