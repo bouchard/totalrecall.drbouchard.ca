@@ -112,6 +112,7 @@ if (count($nav->study_data['questions']) > 0) {
 </script>
 </head>
 <body>
+
 <div id="nav-buttons">
 	<div id="reset-database" style="display: none;">
 		<a href="#">reset progress</a>
@@ -173,5 +174,6 @@ if (count($nav->study_data['questions']) > 0) {
 <div id="debug" style="font-size: 1.5em;">
 </div>
 <?php } ?>
+
 </body>
 </html>
