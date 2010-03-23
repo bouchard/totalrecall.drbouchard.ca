@@ -74,13 +74,13 @@ h1 {
   padding: 0;
 }
 
-.b1 { background-image: url(/images/1_button.gif); }
-.b2 { background-image: url(/images/2_button.gif); }
-.b3 { background-image: url(/images/3_button.gif); }
-.b5 { background-image: url(/images/5_button.gif); }
+.b1 { background-image: url(../images/1_button.gif); }
+.b2 { background-image: url(../images/2_button.gif); }
+.b3 { background-image: url(../images/3_button.gif); }
+.b5 { background-image: url(../images/5_button.gif); }
 
-/* Progress bar. */
-#progress-bar {
+/* Progress bar, and error bar in editing mode. */
+#progress-bar, #error-bar {
 	margin-top: 30px;
 	border: 1px solid #eee;
 	height: 2.5em;
@@ -94,8 +94,8 @@ h1 {
 	-moz-border-radius: 7px;
 }
 
-/* Stop studying. */
-#stop-it {
+/* Stop studying, and also used for the 'edit question' title. */
+#stop-it, #edit-title {
 	margin-top: 20px;
 	background-color: #fff;
 	border: 1px solid #eee;
@@ -112,8 +112,8 @@ h1 {
 #stop-it a:hover { border-bottom-color: #ccc; }
 
 /* Question box. */
-#question-box, #answer-box { text-align: center; }
-#question-content, #answer-content {
+#question-box, #answer-box, #question-edit-box, #answer-edit-box { text-align: center; }
+#question-content, #answer-content, #question-edit-content, #answer-edit-content {
 	border: 8px solid;
 	padding: 20px;
 	font-size: 2.5em;
@@ -122,13 +122,40 @@ h1 {
 	vertical-align: middle;
 	height: 150px;
 }
+
 #question-content p, #answer-content p { margin: 0.5em; }
-#question-content { border-color: #3290fe; }
-#answer-content { border-color: #fa931e; }
+#question-content, #question-edit-content { border-color: #3290fe; }
+#answer-content, #answer-edit-content { border-color: #fa931e; }
 #answer-box { display: none; }
 
+#question-edit-content, #answer-edit-content { border: 0; padding-top: 0; padding-bottom: 0; height: 200px; }
+
 /* Buttons. */
-#question-controls, #answer-controls { margin-top: 10px; }
+#question-controls, #answer-controls, #edit-controls { margin-top: 10px; }
+
+.edit-button {
+	width: 161px;
+	height: 51px;
+	padding: 0;
+}
+
+#save-button { background-image: url(../images/save.gif); }
+#delete-button { background-image: url(../images/delete.gif); }
+#add-button { background-image: url(../images/add.gif); }
+
+/* Edit textarea boxes. */
+textarea {
+	margin: 0;
+	padding: 5px;
+	font-size: 0.8em;
+	width: 564px;
+	height: 160px;
+	text-align: center;
+	line-height: 1.3em;
+}
+
+#question-edit-content textarea { border: 8px solid #3290fe; }
+#answer-edit-content textarea { border: 8px solid #fa931e; }
 
 button {
 	padding: 15px 5px;
@@ -150,13 +177,18 @@ form,fieldset {
 	background-image: url(/images/show_answer_button.gif);
 }
 
-/* 'Reset progress?' link. */
-#reset-database {
+/* Navigation buttons (top right). */
+#nav-buttons {
 	position: absolute;
 	top: 0px;
 	right: 0px;
 	padding: 10px 20px;
 	font-size: 1.3em;
+}
+
+#nav-buttons div {
+	margin-left: 20px;
+	float: right;
 }
 
 #debug {

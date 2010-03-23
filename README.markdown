@@ -55,3 +55,7 @@ Inspiration from the beautiful stylings of cramberry.net.
 	* If you're running Windows, good luck - you're best choice is to upload this directory to your school's webserver if your school has one and has PHP turned on (email them and ask if this seems over your head!).
 4. Load index.php in a modern browser (Navigate to 'http://localhost/' if running this on your own computer).
 5. Done!
+
+### TODO:
+
+1. Add rudimentary editing capabilities to allow for easier formatting rather than having to edit the CSV files directly.

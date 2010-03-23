@@ -11,31 +11,44 @@ $(function() {
 	var $db; // The database (stores easiness factor and next study date).
 	var progress; // Progress (percentage) for today.
 
-	$(document).keypress(function(e) {
-		switch(e.which) {
-			case 32: $('#show-answer').click(); return false; break;
-			case 106: $('#1').click(); return false; break;
-			case 107: $('#2').click(); return false; break;
-			case 108: $('#3').click(); return false; break;
-			case 59: $('#5').click(); return false; break;
-		}
-	});
-
 	function start_it_up() {
 		// Are we in 'study' mode?
 		if ($('#question-content').length != 0) {
-			load_data();
-			populate_cards_for_today();
-			load_next_card();
-			show_reset_button();
+			// We might just have an empty file!
+			if (typeof($fc) == 'undefined') {
+				$('#question-content').html('This CSV file is empty!');
+				show_edit_button();
+			} else {
+				$(document).keypress(function(e) {
+					switch(e.which) {
+						case 32: $('#show-answer').click(); return false; break;
+						case 106: $('#1').click(); return false; break;
+						case 107: $('#2').click(); return false; break;
+						case 108: $('#3').click(); return false; break;
+						case 59: $('#5').click(); return false; break;
+					}
+				});
+				load_data();
+				populate_cards_for_today();
+				load_next_card();
+				show_reset_button();
+			}
 		}
+	}
+
+	function show_edit_button() {
+		$('#edit-question').show();
+		$('#edit-question').click(function() {
+			window.location = 'edit.php?set=' + $set_filename + '&index=' + (typeof(index) == 'undefined' ? '0' : index);
+			return false;
+		});
 	}
 
 	function show_reset_button() {
 		$('#reset-database').show();
 		$('#reset-database').click(function() {
-			$.setItem($set_id, null);
-			$.setItem($set_id + '_card_counts', null);
+			$.setItem($set_filename, null);
+			$.setItem($set_filename + '_card_counts', null);
 			$db = null;
 			start_it_up();
 			return false;
@@ -45,6 +58,7 @@ $(function() {
 	function load_next_card() {
 		update_progress_bar();
 		index = select_next_card();
+		show_edit_button();
 		$('#question-content').html($fc[index][0].replace(/\r|\n/gi, "<br />"));
 		$('#answer-content').html($fc[index][1].replace(/\r|\n/gi, "<br />"));
 		$('#answer-box').hide();
@@ -76,7 +90,7 @@ $(function() {
 	function populate_cards_for_today() {
 		cards_left_today = [];
 		cards_unlearned = [];
-		if ($db) {
+		if (typeof($db) != 'undefined') {
 			for(i in $fc) {
 				if ($db[i] && $db[i]['next_date']) {
 					next_date = new Date(Date.parse($db[i]['next_date']));
@@ -124,7 +138,7 @@ $(function() {
 
 	function save_card_data(quality) {
 		quality = parseInt(quality);
-		if ($db) {
+		if (typeof($db) != 'undefined') {
 			if (!$db[index]) {
 				$db[index] = {'ef' : 2.5, 'next_date' : null, 'reps' : 0, 'interval' : 0 };
 			}
@@ -178,8 +192,8 @@ $(function() {
 	}
 
 	function store_data() {
-		$.setItem($set_id + '_card_counts', [cards_left_today.length, $fc.length]);
-		$.setItem($set_id, $db);
+		$.setItem($set_filename + '_card_counts', [cards_left_today.length, $fc.length]);
+		$.setItem($set_filename, $db);
 	}
 
 	function calculate_progress() {
@@ -195,7 +209,7 @@ $(function() {
 	function load_data() {
 		if (!$db || $db.length == 0) {
 			try {
-				$db = $.getItem($set_id) || [];
+				$db = $.getItem($set_filename) || [];
 			} catch (SyntaxError) {
 				$db = [];
 			}
