@@ -27,60 +27,25 @@
 
 // See the README (README.markdown) for more information.
 
+// Allow PHP to choose the line break depending on the operating system.
 ini_set('auto_detect_line_endings', true);
-
-class CSV {
-
-	# Set the directory where your CSV files are located here:
-	public $directory = './sets/';
-
-	function list_files() {
-		$file_list = array();
-		if (is_dir($this->directory)) {
-			if ($dh = opendir($this->directory)) {
-				while (($file = readdir($dh)) !== false) {
-					if (pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
-						$file_list[] = $file;
-					}
-				}
-				return $file_list;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	function open_study_set($filename) {
-		$csv_data = array();
-		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "r")) !== false) {
-		    while (($data = fgetcsv($handle)) !== false) {
-				$csv_data[] = array($data[0], $data[1]);
-		    }
-		    fclose($handle);
-		} else {
-			return false;
-		}
-		return array('title' => $this->humanize($filename), 'questions' => $csv_data);
-	}
-
-	function humanize($str) {
-		return ucwords(preg_replace('/[_+]/i', ' ', $str));
-	}
-
-}
+// Safari chokes on unicode characters unless this is here.
+header("Content-type:text/html; charset=utf-8");
+// The CSV handling class.
+require_once('lib/CSV.php');
 
 class Navigation {
 
-	public $action;
+	public $action;		// The current user action.
 	public $page_title;
-	public $study_set;
-	public $csv;
+	public $study_data;
+	public $csv;		// A handle to an instance of the CSV class.
+	public $filename;	// Filename of the current CSV file.
 
 	function __construct() {
 		$this->csv = new CSV;
 		$this->action = (strlen($_SERVER['QUERY_STRING']) > 0 ? 'study' : 'choose');
+		$this->filename = (strlen($_SERVER['QUERY_STRING']) > 0 ? $_SERVER['QUERY_STRING'] : null);
 		switch ($this->action) {
 			case 'study':
 				$this->study();
@@ -94,8 +59,8 @@ class Navigation {
 	}
 
 	function study() {
-		if ($this->study_set = $this->csv->open_study_set($_SERVER['QUERY_STRING'])) {
-			$this->page_title = 'Studying: ' . $this->study_set['title'];
+		if ($this->study_data = $this->csv->open_study_data($this->filename)) {
+			$this->page_title = 'Studying: ' . $this->study_data['title'];
 		} else {
 			$this->error = 'Invalid study set.';
 			$this->action = 'choose';
@@ -129,7 +94,7 @@ $nav = new Navigation;
 	$(document).ready(function() {
 		$('#set_list ul li a').each(function() {
 			$(this).html('<strong>' + $(this).html() + '</strong> &nbsp;' + ($.getItem($(this).attr('rel') + '_card_counts') ?
-			(100 - (100 * $.getItem($(this).attr('rel') + '_card_counts')[0] / $.getItem($(this).attr('rel') + '_card_counts')[1])) + '%' + ' ' +
+			(100 - (100 * $.getItem($(this).attr('rel') + '_card_counts')[0] / $.getItem($(this).attr('rel') + '_card_counts')[1])).toFixed(0) + '%' + ' ' +
 			($.getItem($(this).attr('rel') + '_card_counts') ? ('(' + $.getItem($(this).attr('rel') + '_card_counts')[0] + ' of ' + $.getItem($(this).attr('rel') + '_card_counts')[1] + ' cards left today)') : '') : '')
 			);
 		});
@@ -137,9 +102,9 @@ $nav = new Navigation;
 <?php endif; ?>
 <?php if ($nav->action == 'study') : ?>
 <?php
-if (count($nav->study_set['questions']) > 0) {
-	echo "var \$fc = " . json_encode($nav->study_set['questions']) . ";\n";
-	echo "var \$set_id = " . json_encode($_SERVER['QUERY_STRING']) . ";\n";
+if (count($nav->study_data['questions']) > 0) {
+	echo "var \$fc = " . json_encode($nav->study_data['questions']) . ";\n";
+	echo "var \$set_filename = " . json_encode($nav->filename) . ";\n";
 }
 ?>
 <?php endif; ?>
@@ -147,8 +112,13 @@ if (count($nav->study_set['questions']) > 0) {
 </script>
 </head>
 <body>
-<div id="reset-database" style="display: none;">
-	<a href="#">reset progress</a>
+<div id="nav-buttons">
+	<div id="reset-database" style="display: none;">
+		<a href="#">reset progress</a>
+	</div>
+	<div id="edit-question" style="display: none;">
+		<a href="#">edit this question</a>
+	</div>
 </div>
 <?php
 
