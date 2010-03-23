@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ------------------------------------------------------------------
 
-This script/app is designed to be dead-simple: no editing capabilities, no user accounts, no extras - just a beautiful, simple interface for learning.
+This script/app is designed to be dead-simple: only basic editing capabilities, no user accounts, no extras - just a simple, beautiful interface for learning.
 
 ### Features:
 
@@ -58,4 +58,9 @@ Inspiration from the beautiful stylings of cramberry.net.
 
 ### TODO:
 
-1. Add rudimentary editing capabilities to allow for easier formatting rather than having to edit the CSV files directly.
+1. More robust editing capabilities:
+	* Navigating back and forth within a set.
+	* Creating/deleting entire sets.
+2. Figure out a way to calculate 'cards to study today' when first loading in the index - for now, you need to open up each set in order for the code to calculate and update the database entry for this info.
+3. Explicit support for mobile browsers:
+	* Works on the iPhone, but could be optimized.

@@ -169,10 +169,5 @@ $nav = new Navigation;
 	</div>
 </div>
 
-<div id="debug" style="font-size: 1.5em;">
-</div>
-
-<div id="debug" style="font-size: 1.5em;">
-</div>
 </body>
 </html>
