@@ -31,16 +31,14 @@ class CSV {
 		    while (($data = fgetcsv($handle)) !== false) {
 				if (count($data) == 2 && !preg_match('/^#/i', $data[0])) {
 					if ($formatted) {
-						$data[0] = str_replace("\t","", $data[0]);
-						$data[0] = str_replace("\r\n","<br />", $data[0]);
-						$data[0] = str_replace("\n","<br />", $data[0]);
-						$data[0] = str_replace("\r", "<br />", $data[0]);
+						// Allow for nested list formatting, considering Excel won't
+						// allow tab characters in cells.
+						$data[0] = str_replace("<br />","  \n", $data[0]);
+						$data[0] = preg_replace('/\n\*\*\s/', "\n\t* ", $data[0]);
 						$data[0] = Markdown($data[0]);
 
-						$data[1] = str_replace("\t","", $data[1]);
-						$data[1] = str_replace("\r\n","<br />", $data[1]);
-						$data[1] = str_replace("\n","<br />", $data[1]);
-						$data[1] = str_replace("\r", "<br />", $data[1]);
+						$data[1] = str_replace("<br />","  \n", $data[1]);
+						$data[1] = preg_replace('/\n\*\*\s/', "\n\t* ", $data[1]);
 						$data[1] = Markdown($data[1]);
 					} else {
 						$data[0] = str_replace("<br />", "\n", $data[0]);
@@ -60,8 +58,8 @@ class CSV {
 		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "w")) !== false) {
 			foreach($study_data['questions'] as $line) {
 				$line[0] = str_replace("<br /><br />", "\n\n", $line[0]);
-				$line[1] = str_replace("<br /><br />", "\n\n", $line[1]);
 				$line[0] = str_replace("<br />", "  ", $line[0]);
+				$line[1] = str_replace("<br /><br />", "\n\n", $line[1]);
 				$line[1] = str_replace("<br />", "  ", $line[1]);
 				fputcsv($handle, $line);
 			}
