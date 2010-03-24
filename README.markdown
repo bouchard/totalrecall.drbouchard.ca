@@ -48,7 +48,7 @@ Inspiration from the beautiful stylings of cramberry.net.
 
 1. Either clone this repository (git clone http://github.com/brady8/total-recall.git) or if that doesn't make sense to you, click the 'Download Source' button at the top of this page on Github.
 2. Create CSV files (format: question, answer) and save them in the 'sets' sub-directory.
-	* Fields from the CSV are displayed as-is: you can use HTML for formatting, include image links, etc. Anything you can dream of - the world is yours to conquer!
+	* Fields from the CSV are displayed as-is after filtering through [Markdown](http://daringfireball.net/projects/markdown/): you can use HTML for formatting, include image links, etc. Anything you can dream of - the world is yours to conquer!
 3. Deploy the application to a web server that can run PHP scripts:
 	* If you're running a Mac with OS X, copy this entire directory to '/Library/WebServer/Documents/'. Then go to System Preferences -> Sharing -> Web Sharing and turn it on.
 	* If you're running Linux, you probably know what to do to get this to work.
