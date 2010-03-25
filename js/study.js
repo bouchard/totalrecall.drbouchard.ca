@@ -49,6 +49,7 @@ $(function() {
 		$('#reset-database').click(function() {
 			$.setItem($set_filename, null);
 			$.setItem($set_filename + '_card_counts', null);
+			$.setItem($set_filename + '_date', null);
 			$db = null;
 			start_it_up();
 			return false;
@@ -193,6 +194,7 @@ $(function() {
 
 	function store_data() {
 		$.setItem($set_filename + '_card_counts', [cards_left_today.length, $fc.length]);
+		$.setItem($set_filename + '_date', (new Date()).toDateString());
 		$.setItem($set_filename, $db);
 	}
 
