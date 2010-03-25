@@ -131,6 +131,12 @@ h1 {
 
 #question-edit-content, #answer-edit-content { border: 0; padding-top: 0; padding-bottom: 0; height: 200px; }
 
+#question-content ul, #answer-content ul {
+	text-align: left;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 /* Buttons. */
 #question-controls, #answer-controls, #edit-controls { margin-top: 10px; }
 

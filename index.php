@@ -102,7 +102,7 @@ $nav = new Navigation;
 					if ($.getItem($(this).attr('rel') + '_card_counts') != null) {
 						studied_count = $.getItem($(this).attr('rel') + '_card_counts')[0];
 						total_count = $.getItem($(this).attr('rel') + '_card_counts')[1];
-						percentage = (100 - (100 * studied_count / total_count)).toFixed(0);
+						percentage = Math.round(100 - (100 * studied_count / total_count));
 						$(this).html('<strong>' + $(this).html() + '</strong> &nbsp;' +
 						  percentage + '%' + ' (' +
 						  studied_count + ' of ' + total_count + ' left today)'
