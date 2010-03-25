@@ -60,8 +60,8 @@ $(function() {
 		update_progress_bar();
 		index = select_next_card();
 		show_edit_button();
-		$('#question-content').html($fc[index][0].replace(/\r|\n/gi, "<br />"));
-		$('#answer-content').html($fc[index][1].replace(/\r|\n/gi, "<br />"));
+		$('#question-content').html($fc[index][0]);
+		$('#answer-content').html($fc[index][1]);
 		$('#answer-box').hide();
 		$('#question-box').show();
 	}
@@ -200,7 +200,7 @@ $(function() {
 
 	function calculate_progress() {
 		if (cards_left_today && cards_left_today.length > 0) {
-			progress = parseInt(100 - (100 * (cards_left_today.length / $fc.length)));
+			progress = Math.round(parseFloat(100 - (100 * (cards_left_today.length / $fc.length))));
 		} else if (cards_left_today) {
 			progress = 100;
 		} else {
