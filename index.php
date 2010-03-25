@@ -33,6 +33,8 @@ ini_set('auto_detect_line_endings', true);
 header("Content-type:text/html; charset=utf-8");
 // The CSV handling class.
 require_once('lib/CSV.php');
+// Configuration (is editing allowed?)
+require_once('config/is_editing_allowed.php');
 
 class Navigation {
 
@@ -117,9 +119,11 @@ if (count($nav->study_data['questions']) > 0) {
 	<div id="reset-database" style="display: none;">
 		<a href="#">reset progress</a>
 	</div>
+	<?php if (ALLOW_EDITING || $_SERVER['HTTP_HOST'] == 'localhost') : ?>
 	<div id="edit-question" style="display: none;">
 		<a href="#">edit this question</a>
 	</div>
+	<?php endif; ?>
 </div>
 <?php
 

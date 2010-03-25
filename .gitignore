@@ -1,5 +1,5 @@
 .DS_Store
-config/*
+config/deploy.rb
 Capfile
 sets
 sets/*
