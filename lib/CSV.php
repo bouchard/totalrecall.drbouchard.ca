@@ -55,6 +55,8 @@ class CSV {
 	}
 
 	function write_study_data($filename, $study_data) {
+		@chmod($this->directory . urldecode($filename) . '.csv', 0664);
+		@chmod($this->directory . urldecode($filename) . '.csv', 0666);
 		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "w")) !== false) {
 			foreach($study_data['questions'] as $line) {
 				$line[0] = str_replace("<br /><br />", "\n\n", $line[0]);
