@@ -16,13 +16,9 @@ class CSV {
 						$file_list[] = $file;
 					}
 				}
-				return $file_list;
-			} else {
-				return false;
 			}
-		} else {
-			return false;
 		}
+		return $file_list;
 	}
 
 	function open_study_data($filename, $formatted = true) {

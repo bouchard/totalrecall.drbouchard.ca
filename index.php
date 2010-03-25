@@ -94,11 +94,22 @@ $nav = new Navigation;
 //<![CDATA[
 <?php if ($nav->action == 'choose') : ?>
 	$(document).ready(function() {
-		$('#set_list ul li a').each(function() {
-			$(this).html('<strong>' + $(this).html() + '</strong> &nbsp;' + ($.getItem($(this).attr('rel') + '_card_counts') ?
-			(100 - (100 * $.getItem($(this).attr('rel') + '_card_counts')[0] / $.getItem($(this).attr('rel') + '_card_counts')[1])).toFixed(0) + '%' + ' ' +
-			($.getItem($(this).attr('rel') + '_card_counts') ? ('(' + $.getItem($(this).attr('rel') + '_card_counts')[0] + ' of ' + $.getItem($(this).attr('rel') + '_card_counts')[1] + ' cards left today)') : '') : '')
-			);
+		$('#set-list ul li a').each(function() {
+			if ($.getItem($(this).attr('rel') + '_date') != null) {
+				today = new Date();
+				last_tested = new Date(Date.parse($.getItem($(this).attr('rel') + '_date')));
+				if (today.toDateString() == last_tested.toDateString()) {
+					if ($.getItem($(this).attr('rel') + '_card_counts') != null) {
+						studied_count = $.getItem($(this).attr('rel') + '_card_counts')[0];
+						total_count = $.getItem($(this).attr('rel') + '_card_counts')[1];
+						percentage = (100 - (100 * studied_count / total_count)).toFixed(0);
+						$(this).html('<strong>' + $(this).html() + '</strong> &nbsp;' +
+						  percentage + '%' + ' (' +
+						  studied_count + ' of ' + total_count + ' left today)'
+						);
+					}
+				}
+			}
 		});
 	});
 <?php endif; ?>
@@ -130,7 +141,7 @@ if (count($nav->study_data['questions']) > 0) {
 	if ($nav->action == 'choose') {
 		echo "<h1>$nav->page_title</h1>\n";
 		$file_list = $nav->csv->list_files();
-		echo "<div id=\"set_list\">\n";
+		echo "<div id=\"set-list\">\n";
 		if (count($file_list) > 0) {
 			echo "<ul>\n";
 			foreach ($file_list as $file) {
