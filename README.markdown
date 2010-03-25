@@ -7,7 +7,7 @@
 
 *Contact: brady@bradybouchard.ca*
 
-Running demo at: <http://totalrecalldemo.bradybouchard.ca/>
+Running demo at: <http://totalrecall.bradybouchard.ca/>
 
 Development continues at: <http://github.com/brady8/total-recall>
 
