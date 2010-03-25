@@ -124,6 +124,12 @@ $nav = new Navigation;
 </head>
 <body>
 
+<div id="nav-buttons">
+	<div id="go-back">
+		<a href="./?<?php echo(urlencode($_REQUEST['set'])); ?>">back to studying</a>
+	</div>
+</div>
+
 <script type="text/javascript">
 //<![CDATA[
 	$(document).ready(function() {
