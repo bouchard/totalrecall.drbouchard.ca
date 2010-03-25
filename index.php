@@ -81,7 +81,8 @@ $nav = new Navigation;
 <!DOCTYPE html>
 <html>
 <head>
-<meta name = "viewport" content = "width = 660">
+<meta name="viewport" content="width = 660" />
+<meta name="author" content="Brady Bouchard; http://github.com/brady8/total-recall" />
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
 <link href="css/base.css" rel="stylesheet" type="text/css" />
 <link href="css/study.css" rel="stylesheet" type="text/css" />
@@ -188,7 +189,14 @@ if (count($nav->study_data['questions']) > 0) {
 
 <div id="debug" style="font-size: 1.5em;">
 </div>
+
 <?php } ?>
+
+<?php if ($nav->action == 'choose') : ?>
+<div id="footer">
+<a href="http://github.com/brady8/total-recall">Total Recall</a>, developed by <a href="mailto:brady@lunardawn.ca">Brady Bouchard</a>.
+</div>
+<?php endif; ?>
 
 </body>
 </html>

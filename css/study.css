@@ -211,3 +211,14 @@ form,fieldset {
 #debug {
 	display: none;
 }
+
+#footer {
+	margin-top: 10px;
+	text-align: center;
+	font-size: 1.2em;
+	text-transform: lowercase;
+}
+
+#footer a {
+	font-weight: bold;
+}
