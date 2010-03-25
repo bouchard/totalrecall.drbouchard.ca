@@ -7,6 +7,8 @@
 
 // The CSV handling class.
 require_once('lib/CSV.php');
+// Configuration (is editing allowed?)
+require_once('config/is_editing_allowed.php');
 
 class Navigation {
 
@@ -19,6 +21,7 @@ class Navigation {
 	public $filename;	// Filename of the current CSV file.
 
 	function __construct() {
+		if (!ALLOW_EDITING && $_SERVER['HTTP_HOST'] != 'localhost') { $this->go_back(); }
 		$this->csv = new CSV;
 		$this->index = (isset($_GET['index']) ? $_GET['index'] : null);
 		if (isset($_GET['set'])) {
