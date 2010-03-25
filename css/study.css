@@ -191,6 +191,16 @@ form,fieldset {
 	float: right;
 }
 
+#nav-buttons a {
+	color: #bbb;
+}
+
+/* Nav arrows for navigating in edit mode. */
+#edit-title a {
+	font-size: 1.5em;
+	line-height: 2.0em;
+}
+
 #debug {
 	display: none;
 }

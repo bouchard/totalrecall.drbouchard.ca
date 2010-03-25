@@ -124,11 +124,26 @@ $nav = new Navigation;
 <script type="text/javascript">
 //<![CDATA[
 	$(document).ready(function() {
+		var isChanged = false;
 		$("#save-button").click(function() {
 			$('#edit-form').submit();
 		});
 		$("#delete-button").click(function() {
 			$('#delete-form').submit();
+		});
+		$("#add-form").submit(function() {
+			if (isChanged) {
+				alert('Please save your data first.');
+				return false;
+			} else {
+				return true;
+			}
+		});
+		$("#question-input").change(function() {
+			isChanged = true;
+		});
+		$("#answer-input").change(function() {
+			isChanged = true;
 		});
 	});
 //]]>
@@ -144,17 +159,25 @@ $nav = new Navigation;
 	<?php if ($nav->action == 'add') : ?>
 		<a href="./">adding new question (<?php echo(count($nav->study_data['questions']) + 1); ?>)</a>
 	<?php else : ?>
+		<?php if ($nav->index > 0) : ?>
+		<a class="nav-arrows" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index - 1); ?>">&laquo;</a>
+		&nbsp;&nbsp;&nbsp;
+		<?php endif; ?>
 		<a href="./">editing question #<?php echo($nav->index + 1) ?> of <?php echo(count($nav->study_data['questions'])); ?></a>
+		<?php if ($nav->index < count($nav->study_data['questions']) - 1) : ?>
+		&nbsp;&nbsp;&nbsp;
+		<a class="nav-arrows" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index + 1); ?>">&raquo;</a>
+		<?php endif; ?>
 	<?php endif; ?>
 </div>
 <div id="question-edit-box">
 	<form id="edit-form" method="post" action="?action=save&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index); ?>">
 		<div id="question-edit-content">
-			<textarea name="question"><?php echo (isset($nav->study_data['questions'][$nav->index][0]) ? $nav->study_data['questions'][$nav->index][0] : ''); ?></textarea>
+			<textarea name="question" id="question-input"><?php echo (isset($nav->study_data['questions'][$nav->index][0]) ? $nav->study_data['questions'][$nav->index][0] : ''); ?></textarea>
 		</div>
 		<div id="answer-edit-box">
 			<div id="answer-edit-content">
-				<textarea name="answer"><?php echo (isset($nav->study_data['questions'][$nav->index][1]) ? $nav->study_data['questions'][$nav->index][1] : ''); ?></textarea>
+				<textarea name="answer" id="answer-input"><?php echo (isset($nav->study_data['questions'][$nav->index][1]) ? $nav->study_data['questions'][$nav->index][1] : ''); ?></textarea>
 			</div>
 		</div>
 	</form>
