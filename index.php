@@ -83,6 +83,7 @@ $nav = new Navigation;
 <head>
 <meta name="viewport" content="width = 660" />
 <meta name="author" content="Brady Bouchard; http://github.com/brady8/total-recall" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
 <link href="css/base.css" rel="stylesheet" type="text/css" />
 <link href="css/study.css" rel="stylesheet" type="text/css" />

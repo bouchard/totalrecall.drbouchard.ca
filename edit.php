@@ -5,6 +5,10 @@
    Available at: http://github.com/brady8/total-recall
    See the README (README.markdown) for more information. */
 
+// Allow PHP to choose the line break depending on the operating system.
+ini_set('auto_detect_line_endings', true);
+// Safari chokes on unicode characters unless this is here.
+header("Content-type:text/html; charset=utf-8");
 // The CSV handling class.
 require_once('lib/CSV.php');
 // Configuration (is editing allowed?)
@@ -109,7 +113,9 @@ $nav = new Navigation;
 <!DOCTYPE html>
 <html>
 <head>
-<meta name = "viewport" content = "width = 660">
+<meta name="viewport" content="width = 660" />
+<meta name="author" content="Brady Bouchard; http://github.com/brady8/total-recall" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
 <link href="css/base.css" rel="stylesheet" type="text/css" />
 <link href="css/study.css" rel="stylesheet" type="text/css" />
