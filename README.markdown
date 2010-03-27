@@ -40,7 +40,7 @@ This script/app is designed to be dead-simple: only basic editing capabilities, 
 * All progress data is stored locally.
 	* Uses localStorage in modern browsers, based on the simple jQuery plugin available here: <http://www.stoimen.com/blog/2010/02/25/jquery-localstorage-plugin/>
 
-Browser support: Firefox 3.5+, Chrome 2+, Safari 4+, and MSIE 8+ (needed for localStorage support). Tested briefly on the iPhone.
+Browser support: Firefox 3+, Chrome 2+, Safari 4+, and MSIE 8+ (needed for localStorage support). Tested briefly on the iPhone.
 
 Inspiration from the beautiful stylings of cramberry.net.
 

@@ -1,10 +1,13 @@
 (function($) {
 
 	var supported = true;
-	if (typeof localStorage == 'undefined' || typeof JSON == 'undefined')
-		supported = false;
+	if (typeof JSON != 'undefined' && (typeof localStorage != 'undefined' || typeof globalStorage != 'undefined'))
+		if (typeof localStorage != 'undefined')
+			var ls = localStorage;
+		else
+			var ls = globalStorage[location.hostname];
 	else
-		var ls = localStorage;
+		supported = false;
 
 	$.setItem = function(key, value) {
 	if (!supported)

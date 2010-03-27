@@ -11,6 +11,18 @@ $(function() {
 	var $db; // The database (stores easiness factor and next study date).
 	var progress; // Progress (percentage) for today.
 
+	// Internet Explorer is a piece of shit.
+	if(!Array.indexOf) {
+		Array.prototype.indexOf = function(obj) {
+			for(var i=0; i<this.length; i++) {
+				if(this[i] === obj) {
+					return i;
+				}
+			}
+			return -1;
+		}
+	}
+
 	function start_it_up() {
 		// Are we in 'study' mode?
 		if ($('#question-content').length != 0) {
