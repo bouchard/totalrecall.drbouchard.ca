@@ -175,14 +175,12 @@ $nav = new Navigation;
 		<a href="./">adding new question (<?php echo(count($nav->study_data['questions']) + 1); ?>)</a>
 	<?php else : ?>
 		<?php if ($nav->index > 0) : ?>
-		<a class="nav-arrows" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index - 1); ?>">&laquo;</a>
-		&nbsp;&nbsp;&nbsp;
+		<a class="nav-arrows left-arrow" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index - 1); ?>">&laquo;</a>
 		<?php endif; ?>
-		<a href="./">editing question #<?php echo($nav->index + 1) ?> of <?php echo(count($nav->study_data['questions'])); ?></a>
 		<?php if ($nav->index < count($nav->study_data['questions']) - 1) : ?>
-		&nbsp;&nbsp;&nbsp;
-		<a class="nav-arrows" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index + 1); ?>">&raquo;</a>
+		<a class="nav-arrows right-arrow" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index + 1); ?>">&raquo;</a>
 		<?php endif; ?>
+		<h1>editing question #<?php echo($nav->index + 1) ?> of <?php echo(count($nav->study_data['questions'])); ?></h1>
 	<?php endif; ?>
 </div>
 <div id="question-edit-box">

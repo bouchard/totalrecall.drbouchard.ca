@@ -5,13 +5,13 @@
 
 @font-face {
 	font-family: VegurLight;
-	src: url('Vegur-L_0601.eot');
+	src: url('vegur.eot');
 	font-weight: 300;
 }
 
 @font-face {
 	font-family: VegurLight;
-	src: local('Vegur'), local('Vegur-Light'), url('Vegur-L_0601.woff') format('woff'), url('Vegur-L_0601.ttf') format('truetype');
+	src: local('Vegur'), local('Vegur-Light'), url('vegur.woff') format('woff'), url('vegur.ttf') format('truetype');
 	font-weight: 300;
 }
 
@@ -166,6 +166,7 @@ h1 {
 textarea {
 	margin: 0;
 	padding: 5px;
+	font-family: MyHelveticaNeue, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", VegurLight, sans-serif;
 	font-size: 0.8em;
 	width: 564px;
 	height: 160px;
@@ -215,9 +216,29 @@ form,fieldset {
 }
 
 /* Nav arrows for navigating in edit mode. */
-#edit-title a {
-	font-size: 1.5em;
-	line-height: 2.0em;
+#edit-title h1 {
+	font-size: 14px;
+	line-height: 20px;
+	display: block;
+	margin: 3px auto;
+	text-align: center;
+	font-weight: bold;
+}
+
+#edit-title a.nav-arrows {
+	display: block;
+	font-size: 20px;
+	line-height: 20px;
+	margin: 0;
+	padding: 0px 10px;
+}
+
+#edit-title a.left-arrow {
+	float: left;
+}
+
+#edit-title a.right-arrow {
+	float: right;
 }
 
 #debug {
