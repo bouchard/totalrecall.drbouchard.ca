@@ -172,7 +172,7 @@ $nav = new Navigation;
 
 <div id="edit-title">
 	<?php if ($nav->action == 'add') : ?>
-		<a href="./">adding new question (<?php echo(count($nav->study_data['questions']) + 1); ?>)</a>
+		<h1>adding new question (<?php echo(count($nav->study_data['questions']) + 1); ?>)</h1>
 	<?php else : ?>
 		<?php if ($nav->index > 0) : ?>
 		<a class="nav-arrows left-arrow" href="?action=edit&set=<?php echo(urlencode($_REQUEST['set'])); ?>&index=<?php echo($nav->index - 1); ?>">&laquo;</a>
