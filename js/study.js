@@ -1,7 +1,9 @@
-/* This file is a part of Total Recall, the flash card webapp.
-   Copyright Brady Bouchard 2010.
-   Available at: http://github.com/brady8/total-recall
-   See the README (README.markdown) for more information. */
+/*
+ * This file is a part of Total Recall, the flash card webapp.
+ * Copyright Brady Bouchard 2010.
+ * Available at: http://github.com/brady8/total-recall
+ * See the README (README.markdown) for more information.
+ */
 
 $(function() {
 
@@ -70,7 +72,12 @@ $(function() {
 
 	function load_next_card() {
 		update_progress_bar();
-		index = select_next_card();
+		if (typeof $start_index != 'undefined' && $start_index != null) {
+			index = parseInt($start_index) || select_next_card();
+			$start_index = null;
+		} else {
+			index = select_next_card();
+		}
 		show_edit_button();
 		$('#question-content').html($fc[index][0]);
 		$('#answer-content').html($fc[index][1]);

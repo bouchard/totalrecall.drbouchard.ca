@@ -1,53 +1,57 @@
 <?php
+#
+# Total Recall - the flash card webapp.
+# Stand-alone PHP script for Flash Cards with a Javascript interface and logic.
+# By: Brady Bouchard
+# brady@bradybouchard.ca
+# Available at: http://github.com/brady8/total-recall
+#
+# ------------------------------------------------------------------
+#
+# Copyright Brady Bouchard 2010.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# ------------------------------------------------------------------
+#
+# See the README (README.markdown) for more information.
 
-// Total Recall - the flash card webapp.
-// Stand-alone PHP script for Flash Cards with a Javascript interface and logic.
-// By: Brady Bouchard
-// brady@bradybouchard.ca
-// Available at: http://github.com/brady8/total-recall
 
-// ------------------------------------------------------------------
-
-// Copyright Brady Bouchard 2010.
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-// ------------------------------------------------------------------
-
-// See the README (README.markdown) for more information.
-
-// Allow PHP to choose the line break depending on the operating system.
+# Allow PHP to choose the line break depending on the operating system.
 ini_set('auto_detect_line_endings', true);
-// Safari chokes on unicode characters unless this is here.
+# Safari chokes on unicode characters unless this is here.
 header("Content-type:text/html; charset=utf-8");
-// The CSV handling class.
+# The CSV handling class.
 require_once('lib/CSV.php');
-// Configuration (is editing allowed?)
+# Configuration (is editing allowed?)
 require_once('config/is_editing_allowed.php');
 
 class Navigation {
 
-	public $action;		// The current user action.
+	public $action;			# The current user action.
 	public $page_title;
 	public $study_data;
-	public $csv;		// A handle to an instance of the CSV class.
-	public $filename;	// Filename of the current CSV file.
+	public $csv;			# A handle to an instance of the CSV class.
+	public $filename;		# Filename of the current CSV file.
+	public $start_index;	# Which card do we want to start with?
 
 	function __construct() {
 		$this->csv = new CSV;
 		$this->action = (strlen($_SERVER['QUERY_STRING']) > 0 ? 'study' : 'choose');
-		$this->filename = (strlen($_SERVER['QUERY_STRING']) > 0 ? $_SERVER['QUERY_STRING'] : null);
+		$qs_arguments = preg_split('/&/', $_SERVER['QUERY_STRING']);
+		$this->filename = (strlen($qs_arguments[0]) > 0 ? $qs_arguments[0] : null);
+		$this->start_index = ((isset($qs_arguments[1]) && strlen($qs_arguments[1]) > 0) ? $qs_arguments[1] : null);
 		switch ($this->action) {
 			case 'study':
 				$this->study();
@@ -120,6 +124,9 @@ $nav = new Navigation;
 if (count($nav->study_data['questions']) > 0) {
 	echo "var \$fc = " . json_encode($nav->study_data['questions']) . ";\n";
 	echo "var \$set_filename = " . json_encode($nav->filename) . ";\n";
+	if ($nav->start_index) {
+		echo "var \$start_index = " . json_encode($nav->start_index) . ";\n";
+	}
 }
 ?>
 <?php endif; ?>

@@ -56,9 +56,9 @@ class CSV {
 		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "w")) !== false) {
 			foreach($study_data['questions'] as $line) {
 				$line[0] = str_replace("<br /><br />", "\n\n", $line[0]);
-				$line[0] = str_replace("<br />", "  ", $line[0]);
+				$line[0] = str_replace("<br />", "  \n", $line[0]);
 				$line[1] = str_replace("<br /><br />", "\n\n", $line[1]);
-				$line[1] = str_replace("<br />", "  ", $line[1]);
+				$line[1] = str_replace("<br />", "  \n", $line[1]);
 				fputcsv($handle, $line);
 			}
 			fclose($handle);

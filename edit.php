@@ -1,28 +1,29 @@
 <?php
+#
+#	This file is a part of Total Recall, the flash card webapp.
+#	Copyright Brady Bouchard 2010.
+#	Available at: http://github.com/brady8/total-recall
+#	See the README (README.markdown) for more information.
+#
 
-/* This file is a part of Total Recall, the flash card webapp.
-   Copyright Brady Bouchard 2010.
-   Available at: http://github.com/brady8/total-recall
-   See the README (README.markdown) for more information. */
-
-// Allow PHP to choose the line break depending on the operating system.
+# Allow PHP to choose the line break depending on the operating system.
 ini_set('auto_detect_line_endings', true);
-// Safari chokes on unicode characters unless this is here.
+# Safari chokes on unicode characters unless this is here.
 header("Content-type:text/html; charset=utf-8");
-// The CSV handling class.
+# The CSV handling class.
 require_once('lib/CSV.php');
-// Configuration (is editing allowed?)
+# Configuration (is editing allowed?)
 require_once('config/is_editing_allowed.php');
 
 class Navigation {
 
-	public $action;		// The current user action.
+	public $action;		# The current user action.
 	public $page_title;
 	public $study_data;
-	public $csv;		// A handle to an instance of the CSV class.
-	public $index;		// The index of the question/answer pair to be modified.
-	public $error;		// Any error messages generated.
-	public $filename;	// Filename of the current CSV file.
+	public $csv;		# A handle to an instance of the CSV class.
+	public $index;		# The index of the question/answer pair to be modified.
+	public $error;		# Any error messages generated.
+	public $filename;	# Filename of the current CSV file.
 
 	function __construct() {
 		if (!ALLOW_EDITING && $_SERVER['HTTP_HOST'] != 'localhost') { $this->go_back(); }
@@ -132,7 +133,7 @@ $nav = new Navigation;
 
 <div id="nav-buttons">
 	<div id="go-back">
-		<a href="./?<?php echo(urlencode($_REQUEST['set'])); ?>">back to studying</a>
+		<a href="./?<?php echo(urlencode($_REQUEST['set'])); ?>&<?php echo(urlencode($nav->index)) ?>">back to studying</a>
 	</div>
 </div>
 
