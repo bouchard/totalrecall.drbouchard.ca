@@ -204,7 +204,7 @@ if (count($nav->study_data['questions']) > 0) {
 <div id="footer">
 <a href="http://github.com/brady8/total-recall">Total Recall</a>, developed by <a href="mailto:brady@lunardawn.ca">Brady Bouchard</a>.
 <?php if (ADD_SUBMIT_LINK || $_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == 'totalrecall.bradybouchard.ca') { ?>
-<br />If you have flash cards to contribute or corrections to those already here, please feel free to <a href="mailto:flashcards@bradybouchard.ca">email</a> me!
+<br />If you have flash cards to contribute or corrections to those already here, please feel free to <a href="mailto:<?php echo (CONTRIB_EMAIL_LINK); ?>">email</a> me!
 <?php } ?>
 </div>
 <?php endif; ?>
