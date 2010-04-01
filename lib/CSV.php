@@ -18,6 +18,7 @@ class CSV {
 				}
 			}
 		}
+		sort($file_list);
 		return $file_list;
 	}
 
