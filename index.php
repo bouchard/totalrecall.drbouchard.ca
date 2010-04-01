@@ -35,7 +35,7 @@ header("Content-type:text/html; charset=utf-8");
 # The CSV handling class.
 require_once('lib/CSV.php');
 # Configuration (is editing allowed?)
-require_once('config/is_editing_allowed.php');
+require_once('config/options.php');
 
 class Navigation {
 
@@ -203,6 +203,9 @@ if (count($nav->study_data['questions']) > 0) {
 <?php if ($nav->action == 'choose') : ?>
 <div id="footer">
 <a href="http://github.com/brady8/total-recall">Total Recall</a>, developed by <a href="mailto:brady@lunardawn.ca">Brady Bouchard</a>.
+<?php if (ADD_SUBMIT_LINK || $_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == 'totalrecall.bradybouchard.ca') { ?>
+<br />If you have flash cards to contribute or corrections to those already here, please feel free to <a href="mailto:flashcards@bradybouchard.ca">email</a> me!
+<?php } ?>
 </div>
 <?php endif; ?>
 

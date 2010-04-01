@@ -4,4 +4,7 @@
 // Editing is always allowed on localhost.
 define('ALLOW_EDITING', false);
 
+// Add an email link so users can contribute flash cards?
+define('ADD_SUBMIT_LINK', false);
+
 ?>
