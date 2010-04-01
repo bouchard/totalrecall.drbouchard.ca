@@ -133,11 +133,18 @@ h1 {
 
 #question-edit-content, #answer-edit-content { border: 0; padding-top: 0; padding-bottom: 0; height: 200px; }
 
-#question-content ul, #answer-content ul {
+#question-content ul, #answer-content ul, #question-content ol, #answer-content ol {
+	margin: 0 auto;
+	display: inline-block;
+}
+
+#question-content * ul, #answer-content * ul, #question-content * ol, #answer-content * ol {
+	display: block;
+}
+
+
+#question-content li, #answer-content li {
 	text-align: left;
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left: 1em;
 }
 
 /* Buttons. */
