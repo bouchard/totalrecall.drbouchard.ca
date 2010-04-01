@@ -23,7 +23,7 @@ class CSV {
 
 	function open_study_data($filename, $formatted = true) {
 		$csv_data = array();
-		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "r")) !== false) {
+		if (($handle = @fopen($this->directory . urldecode($filename) . '.csv', "r")) !== false) {
 		    while (($data = fgetcsv($handle)) !== false) {
 				if (count($data) == 2 && !preg_match('/^#/i', $data[0])) {
 					if ($formatted) {
@@ -44,16 +44,16 @@ class CSV {
 				}
 		    }
 		    fclose($handle);
+			return array('title' => $this->humanize($filename), 'questions' => $csv_data);
 		} else {
 			return false;
 		}
-		return array('title' => $this->humanize($filename), 'questions' => $csv_data);
 	}
 
 	function write_study_data($filename, $study_data) {
 		@chmod($this->directory . urldecode($filename) . '.csv', 0664);
 		@chmod($this->directory . urldecode($filename) . '.csv', 0666);
-		if (($handle = fopen($this->directory . urldecode($filename) . '.csv', "w")) !== false) {
+		if (($handle = @fopen($this->directory . urldecode($filename) . '.csv', "w")) !== false) {
 			foreach($study_data['questions'] as $line) {
 				$line[0] = str_replace("<br /><br />", "\n\n", $line[0]);
 				$line[0] = str_replace("<br />", "  \n", $line[0]);
@@ -62,6 +62,7 @@ class CSV {
 				fputcsv($handle, $line);
 			}
 			fclose($handle);
+			return true;
 		} else {
 			return false;
 		}

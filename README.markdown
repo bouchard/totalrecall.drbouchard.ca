@@ -46,21 +46,32 @@ Inspiration from the beautiful stylings of cramberry.net.
 
 ### How to Use:
 
-1. Either clone this repository (git clone http://github.com/brady8/total-recall.git) or if that doesn't make sense to you, click the 'Download Source' button at the top of this page on Github.
-2. Create CSV files (format: question, answer) and save them in the 'sets' sub-directory.
-	* Fields from the CSV are displayed as-is after filtering through [Markdown](http://daringfireball.net/projects/markdown/): you can use HTML for formatting, include image links, etc. Anything you can dream of - the world is yours to conquer!
-3. Deploy the application to a web server that can run PHP scripts:
-	* If you're running a Mac with OS X, copy this entire directory to '/Library/WebServer/Documents/'. Then go to System Preferences -> Sharing -> Web Sharing and turn it on.
+#### Step-by-step Setup:
+
+1. Click the '**Downloads**' button at the top of this page on Github, and download the latest packaged version.
+2. Unzip the file you just downloaded (on Macs, this happens automatically).
+3. Create a subdirectory named 'sets' within the folder you just unzipped.
+3. Each set of flash cards will be stored a separate CSV (*comma-separated value*) file, with the format "question, answer" in the 'sets' subdirectory. Your CSV files must have the extension '.csv'. You can create CSV files easily in Microsoft Excel - just choose 'CSV (Comma-separated values)' as the format when you go to save the file.
+	* Anything you type will be displayed as-is - if you want bullet lists, etc., read the next bullet point:
+	* Questions and answers are formatted with [Markdown](http://daringfireball.net/projects/markdown/): you can use HTML as well if you like for formatting, include image links, etc.
+4. Put the directory somewhere that a webserver can get at it:
+	* If you're running a Mac with OS X, you're in luck - you have a webserver built in! Copy everything in the package you downloaded to '/Library/WebServer/Documents/'. Then go to **System Preferences -> Sharing** and turn 'Web Sharing' on.
 	* If you're running Linux, you probably know what to do to get this to work.
-	* If you're running Windows, good luck - you're best choice is to upload this directory to your school's webserver if your school has one and has PHP turned on (email them and ask if this seems over your head!).
-4. Load index.php in a modern browser (Navigate to 'http://localhost/' if running this on your own computer).
+	* If you're running Windows, good luck - you're best choice is to upload this directory to your school's webserver if your school has one and has **PHP** turned on (email them and ask if this seems over your head!).
+5. Load index.php in a modern browser (Navigate to 'http://localhost/' if running this on your own computer).
+6. Done!
+
+#### Quick Setup for Advanced Users:
+
+1. Clone the repo ("git clone http://github.com/brady8/total-recall.git"). Or download the zipped package.
+2. CSV files (format: question, answer) go in the subdirectory 'sets'. Formatted with [Markdown](http://daringfireball.net/projects/markdown/), and raw HTML is fine.
+3. Put the directory somewhere your webserver can get at it: on Macs, /Library/WebServer/Documents is good.
+4. Load it up (again, on Macs: http://localhost/).
 5. Done!
 
 ### TODO:
 
 1. More robust editing capabilities:
-	* Navigating back and forth within a set.
 	* Creating/deleting entire sets.
-2. Figure out a way to calculate 'cards to study today' when first loading in the index - for now, you need to open up each set in order for the code to calculate and update the database entry for this info.
-3. Explicit support for mobile browsers:
+2. Explicit support for mobile browsers:
 	* Works on the iPhone, but could be optimized.

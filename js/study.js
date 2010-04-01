@@ -74,6 +74,7 @@ $(function() {
 		update_progress_bar();
 		if (typeof $start_index != 'undefined' && $start_index != null) {
 			index = parseInt($start_index) || select_next_card();
+			if (index >= $fc.length) { index = $fc.length - 1; }
 			$start_index = null;
 		} else {
 			index = select_next_card();

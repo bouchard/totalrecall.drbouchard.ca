@@ -80,7 +80,7 @@ class Navigation {
 	function add() {
 		$this->study_data = $this->csv->open_study_data($this->filename, false);
 		$this->index = count($this->study_data['questions']);
-		$this->page_title = 'Adding a new question';
+		$this->page_title = 'Adding a New Question';
 	}
 
 	function edit() {
@@ -92,6 +92,7 @@ class Navigation {
 		$this->study_data = $this->csv->open_study_data($this->filename, false);
 		$this->study_data['questions'][$this->index] = array($_REQUEST['question'], $_REQUEST['answer']);
 		$this->csv->write_study_data($this->filename, $this->study_data);
+		$this->page_title = 'Saved Question: ' . urldecode($this->index + 1);
 	}
 
 	function delete() {

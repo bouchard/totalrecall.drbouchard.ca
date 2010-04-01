@@ -49,9 +49,9 @@ class Navigation {
 	function __construct() {
 		$this->csv = new CSV;
 		$this->action = (strlen($_SERVER['QUERY_STRING']) > 0 ? 'study' : 'choose');
-		$qs_arguments = preg_split('/&/', $_SERVER['QUERY_STRING']);
-		$this->filename = (strlen($qs_arguments[0]) > 0 ? $qs_arguments[0] : null);
-		$this->start_index = ((isset($qs_arguments[1]) && strlen($qs_arguments[1]) > 0) ? $qs_arguments[1] : null);
+		$qs = preg_split('/&/', $_SERVER['QUERY_STRING']);
+		$this->filename = (isset($qs[0]) && strlen($qs[0]) > 0 ? $qs[0] : null);
+		$this->start_index = (isset($qs[1]) && strlen($qs[1]) > 0 ? $qs[1] : null);
 		switch ($this->action) {
 			case 'study':
 				$this->study();
