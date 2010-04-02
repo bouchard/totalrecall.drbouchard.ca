@@ -152,6 +152,13 @@ h1 {
 	text-align: left;
 }
 
+/* You can include images in your question/answer pairs. */
+/* They are not displayed by default, instead showing a link that reveals them on hover. */
+
+#question-content img, #answer-content img {
+	display: none;
+}
+
 /* Buttons. */
 #question-controls, #answer-controls, #edit-controls { margin-top: 10px; }
 
@@ -257,11 +264,4 @@ form,fieldset {
 
 #footer a {
 	font-weight: bold;
-}
-
-/* You can include images in your question/answer pairs. */
-/* They are not displayed by default, instead showing a link that reveals them on hover. */
-
-#question-content img, #answer-content img {
-	display: none;
 }

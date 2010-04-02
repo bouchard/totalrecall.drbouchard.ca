@@ -112,7 +112,7 @@ $(function() {
 		cards_left_today = [];
 		cards_unlearned = [];
 		if (typeof($db) != 'undefined') {
-			for(i in $fc) {
+			for(var i = 0; i < $fc.length; i++) {
 				if ($db[i] && $db[i]['next_date']) {
 					next_date = new Date(Date.parse($db[i]['next_date']));
 					curr_date = new Date();
@@ -129,7 +129,7 @@ $(function() {
 				}
 			}
 		} else {
-			for (i in $fc) {
+			for (var i = 0; i < $fc.length; i++) {
 				cards_left_today.push(parseInt(i));
 				cards_unlearned.push(parseInt(i));
 			}
