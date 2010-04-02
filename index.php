@@ -127,7 +127,7 @@ $nav = new Navigation;
 if (count($nav->study_data['questions']) > 0) {
 	echo "var \$fc = " . json_encode($nav->study_data['questions']) . ";\n";
 	echo "var \$set_filename = " . json_encode($nav->filename) . ";\n";
-	if ($nav->start_index) {
+	if (isset($nav->start_index)) {
 		echo "var \$start_index = " . json_encode($nav->start_index) . ";\n";
 	}
 }
