@@ -101,7 +101,13 @@ $(function() {
 					parent.html('image: &#8220;' + link_title + '&#8221;');
 				}
 			});
-			$('a.fancybox').fancybox({ 'hideOnContentClick': true });
+			$('a.fancybox').fancybox({
+				'hideOnContentClick': true,
+				'showCloseButton' : false,
+				'speedIn' : 0,
+				'speedOut' : 0,
+				'overlayColor' : '#000'
+			});
 		}
 	}
 

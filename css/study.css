@@ -162,29 +162,24 @@ h1 {
 	margin: 0 auto;
 	padding: 4px;
 	background-color: #3290fe;
-	border-radius: 7px;
-	-webkit-border-radius: 7px;
-	-moz-border-radius: 7px;
 }
 
 #question-content a.fancybox, #answer-content a.fancybox {
 	pointer: cursor;
-	color: #fff;
+	color: #000;
 	font-weight: bold;
 	font-size: 14px;
 	line-height: 14px;
 	display: inline-block;
 	margin: 0 auto;
 	padding: 6px 9px 9px 9px;
-	background-color: #3290fe;
-	border-radius: 7px;
-	-webkit-border-radius: 7px;
-	-moz-border-radius: 7px;
 }
 
-#question-content a.fancybox:hover, #answer-content a.fancybox:hover {
-	color: #fff;
-}
+#question-content a.fancybox { border: 4px solid #3290fe; }
+#answer-content a.fancybox { border: 4px solid #fa931e; }
+
+#question-content a.fancybox:hover { background-color: #B6D5FB; }
+#answer-content a.fancybox:hover { background-color: #F5D2AB; }
 
 /* Buttons. */
 #question-controls, #answer-controls, #edit-controls { margin-top: 10px; }
