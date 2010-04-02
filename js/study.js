@@ -206,7 +206,7 @@ $(function() {
 	function update_progress_bar() {
 		$('#progress-bar').show();
 		calculate_progress();
-		$('#progress-bar').html(progress + '%');
+		$('#progress-bar').html(progress + '% ' + '<span>(' + ($fc.length - cards_left_today.length) + ' of ' + $fc.length + ')</span>');
 		$('#debug').html('DB: ' + JSON.stringify($db) + "<br>" +
 		'cards_left_today: ' + JSON.stringify(cards_left_today) + "<br>" +
 		'cards_unlearned: ' + JSON.stringify(cards_unlearned));

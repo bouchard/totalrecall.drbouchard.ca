@@ -13,7 +13,7 @@ header("Content-type:text/html; charset=utf-8");
 # The CSV handling class.
 require_once('lib/CSV.php');
 # Configuration (is editing allowed?)
-require_once('config/is_editing_allowed.php');
+require_once('config/options.php');
 
 class Navigation {
 

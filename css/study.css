@@ -97,6 +97,11 @@ h1 {
 	-moz-border-radius: 7px;
 }
 
+#progress-bar span {
+	font-weight: normal;
+	font-size: 0.8em;
+}
+
 /* Stop studying, and also used for the 'edit question' title. */
 #stop-it, #edit-title {
 	margin-top: 20px;
