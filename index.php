@@ -215,5 +215,17 @@ if (count($nav->study_data['questions']) > 0) {
 </div>
 <?php endif; ?>
 
+<?php if ($_SERVER['HTTP_HOST'] != 'localhost' && GOOGLE_ANALYTICS_CODE) : ?>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("<?php echo(GOOGLE_ANALYTICS_CODE); ?>");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<?php endif; ?>
+
 </body>
 </html>
