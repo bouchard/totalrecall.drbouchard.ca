@@ -1,6 +1,7 @@
 <?php
 
 require_once('markdown.php');
+require_once('markdown_exts.php');
 
 class CSV {
 

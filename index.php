@@ -96,6 +96,9 @@ $nav = new Navigation;
 <script src="js/jquery.cookie.js" type="text/javascript"></script>
 <script src="js/jquery.jstore.js" type="text/javascript"></script>
 <script src="js/study.js" type="text/javascript"></script>
+<link href="js/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
+<script src="js/fancybox/jquery.fancybox-1.3.1.pack.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 //<![CDATA[
 <?php if ($nav->action == 'choose') : ?>
@@ -132,7 +135,9 @@ if (count($nav->study_data['questions']) > 0) {
 <?php endif; ?>
 //]]>
 </script>
+
 </head>
+
 <body>
 
 <div id="nav-buttons">

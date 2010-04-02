@@ -84,18 +84,32 @@ $(function() {
 		$('#answer-content').html($fc[index][1]);
 		$('#answer-box').hide();
 		$('#question-box').show();
+		parse_with_fancybox();
 	}
 
-	function show_answer() {
-		$('#question-box').hide();
-		$('#answer-box').show();
-		return false;
+	// Any images in the question/answer pairs are removed,
+	// and replaced with links that use Fancybox.
+	// Only occurs if there is a 'alt' or 'title' attribute set.
+	function parse_with_fancybox() {
+		if ($('a.fancybox').length > 0) {
+			$('a.fancybox > img').each(function() {
+				var link_title = $(this).attr('alt') || $(this).attr('title');
+				if (typeof link_title != 'undefined') {
+					var parent = $(this).parent();
+					$(this).hide();
+					parent.attr('title', link_title);
+					parent.html('image: &#8220;' + link_title + '&#8221;');
+				}
+			});
+			$('a.fancybox').fancybox({ 'hideOnContentClick': true });
+		}
 	}
 
 	$('#show-answer').click(function() {
 		if($('#answer-box').css('display') == 'none') {
 			$('#question-box').hide();
 			$('#answer-box').show();
+			parse_with_fancybox();
 		}
 		return false;
 	});

@@ -24,7 +24,7 @@ define( 'MARKDOWN_VERSION',  "1.0.1n" ); # Sat 10 Oct 2009
 @define( 'MARKDOWN_TAB_WIDTH',     4 );
 
 ### Standard Function Interface ###
-@define( 'MARKDOWN_PARSER_CLASS',  'Markdown_Parser' );
+@define( 'MARKDOWN_PARSER_CLASS',  'Extended_Markdown_Parser' );
 
 function Markdown($text) {
 #

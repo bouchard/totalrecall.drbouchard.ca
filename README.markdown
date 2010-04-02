@@ -44,6 +44,8 @@ Browser support: Firefox 3+, Chrome 2+, Safari 4+, and MSIE 8+ (needed for local
 
 Inspiration from the beautiful stylings of cramberry.net.
 
+Using the wonderful [Fancybox](http://fancybox.net/) for displaying overlaid images.
+
 ### How to Use:
 
 #### Step-by-step Setup:
