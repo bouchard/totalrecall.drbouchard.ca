@@ -10,22 +10,22 @@
 		supported = false;
 
 	$.setItem = function(key, value) {
-	if (!supported)
-		return false;
-	ls.setItem(key, JSON.stringify(value));
+		if (!supported)
+			return false;
+		ls.setItem(key, JSON.stringify(value));
 	};
 
-   $.getItem = function(key) {
-      if (!supported)
-         return false;
-      return JSON.parse(ls.getItem(key));
-   };
+	$.getItem = function(key) {
+		if (!supported)
+			return false;
+		alert(ls.getItem(key));
+		return JSON.parse(typeof(ls.getItem(key)) == 'string' ? ls.getItem(key) : '');
+	};
 
-   $.removeItem = function(key) {
-      if (!supported)
-         return false;
-      ls.removeItem(key);
-      return true;
-   };
-
+	$.removeItem = function(key) {
+		if (!supported)
+			return false;
+		ls.removeItem(key);
+		return true;
+	};
 })(jQuery);

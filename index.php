@@ -94,7 +94,6 @@ $nav = new Navigation;
 <link href="css/study.css" rel="stylesheet" type="text/css" />
 <script src="js/json.js" type="text/javascript"></script>
 <script src="js/jquery.js" type="text/javascript"></script>
-<script src="js/jquery.cookie.js" type="text/javascript"></script>
 <script src="js/jquery.jstore.js" type="text/javascript"></script>
 <script src="js/study.js" type="text/javascript"></script>
 <link href="js/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
