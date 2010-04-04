@@ -92,11 +92,10 @@ $nav = new Navigation;
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
 <link href="css/base.css" rel="stylesheet" type="text/css" />
 <link href="css/study.css" rel="stylesheet" type="text/css" />
-<script src="js/json.js" type="text/javascript"></script>
+<link href="js/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery.js" type="text/javascript"></script>
 <script src="js/jquery.jstore.js" type="text/javascript"></script>
 <script src="js/study.js" type="text/javascript"></script>
-<link href="js/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
 <script src="js/fancybox/jquery.fancybox-1.3.1.pack.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -208,6 +207,7 @@ if (count($nav->study_data['questions']) > 0) {
 <?php if ($nav->action == 'choose') : ?>
 <div id="footer">
 <p><a href="http://github.com/brady8/total-recall">Total Recall</a>, developed by <a href="mailto:brady@lunardawn.ca">Brady Bouchard</a>.</p>
+<p>Requires <strong>Firefox 3.5+</strong>, <strong>Chrome 5+ (ish?)</strong>, <strong>Safari 4+</strong>, or <strong>MSIE 8+</strong>.<br />Works in <strong>Firefox 3.0</strong> too, but no data memorization data is saved.</p>
 <p>Using the SM-2 algorithm for <a href="http://en.wikipedia.org/wiki/Spaced_repetition">spaced interval learning</a>.<br />The frequency with which cards are shown is based on how you do on previous attempts.</p>
 <?php if (ADD_SUBMIT_LINK || $_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == 'totalrecall.bradybouchard.ca') { ?>
 <p>If you have flash cards to contribute or corrections to those already here, please feel free to <a href="mailto:<?php echo (CONTRIB_EMAIL_LINK); ?>">email</a> me!</p>

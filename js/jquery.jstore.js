@@ -18,8 +18,7 @@
 	$.getItem = function(key) {
 		if (!supported)
 			return false;
-		alert(ls.getItem(key));
-		return JSON.parse(typeof(ls.getItem(key)) == 'string' ? ls.getItem(key) : '');
+		return JSON.parse(ls.getItem(key));
 	};
 
 	$.removeItem = function(key) {
@@ -28,4 +27,5 @@
 		ls.removeItem(key);
 		return true;
 	};
+
 })(jQuery);
