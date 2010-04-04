@@ -28,14 +28,14 @@
 # See the README (README.markdown) for more information.
 
 
+# Configuration (is editing allowed?)
+require_once('config.php');
+# The CSV handling class.
+require_once('lib/CSV.php');
 # Allow PHP to choose the line break depending on the operating system.
 ini_set('auto_detect_line_endings', true);
 # Safari chokes on unicode characters unless this is here.
 header("Content-type:text/html; charset=utf-8");
-# The CSV handling class.
-require_once('lib/CSV.php');
-# Configuration (is editing allowed?)
-require_once('config/options.php');
 
 class Navigation {
 

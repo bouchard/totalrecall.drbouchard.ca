@@ -1,5 +1,8 @@
 <?php
 
+// The directory where the flash card CSV files are stored.
+define('SETS_DIRECTORY', './sets/');
+
 // Change the following to true if you'd like to allow editing of flash cards.
 // Editing is always allowed on localhost.
 define('ALLOW_EDITING', false);

@@ -6,7 +6,7 @@ require_once('markdown_exts.php');
 class CSV {
 
 	# Set the directory where your CSV files are located here:
-	public $directory = './sets/';
+	public $directory = SETS_DIRECTORY;
 
 	function list_files() {
 		$file_list = array();
