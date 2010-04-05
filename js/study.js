@@ -228,7 +228,7 @@ $(function() {
 	function update_progress_bar() {
 		$('#progress-bar').show();
 		calculate_progress();
-		$('#progress-bar').html('<span>(Card #' + index + ' of ' + $fc.length + ')</span> ' + progress + '% ' + '<span>(' + cards_left_today.length + ' left today)</span>');
+		$('#progress-bar').html('<span>(Card #' + (index + 1) + ' of ' + $fc.length + ')</span> ' + progress + '% ' + '<span>(' + cards_left_today.length + ' left today)</span>');
 		$('#debug').html('DB: ' + JSON.stringify($db) + "<br>" +
 		'cards_left_today: ' + JSON.stringify(cards_left_today) + "<br>" +
 		'cards_unlearned: ' + JSON.stringify(cards_unlearned));
