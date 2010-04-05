@@ -45,6 +45,7 @@ $(function() {
 				load_data();
 				populate_cards_for_today();
 				load_next_card();
+				store_data();
 				show_reset_button();
 			}
 		}
@@ -71,7 +72,6 @@ $(function() {
 	}
 
 	function load_next_card() {
-		update_progress_bar();
 		if (typeof $start_index != 'undefined' && $start_index != null) {
 			index = parseInt($start_index);
 			index = isNaN(index) ? select_next_card() : index;
@@ -80,6 +80,7 @@ $(function() {
 		} else {
 			index = select_next_card();
 		}
+		update_progress_bar();
 		show_edit_button();
 		$('#question-content').html($fc[index][0]);
 		$('#answer-content').html($fc[index][1]);
@@ -227,7 +228,7 @@ $(function() {
 	function update_progress_bar() {
 		$('#progress-bar').show();
 		calculate_progress();
-		$('#progress-bar').html(progress + '% ' + '<span>(' + ($fc.length - cards_left_today.length) + ' of ' + $fc.length + ')</span>');
+		$('#progress-bar').html('<span>(Card #' + index + ' of ' + $fc.length + ')</span> ' + progress + '% ' + '<span>(' + cards_left_today.length + ' left today)</span>');
 		$('#debug').html('DB: ' + JSON.stringify($db) + "<br>" +
 		'cards_left_today: ' + JSON.stringify(cards_left_today) + "<br>" +
 		'cards_unlearned: ' + JSON.stringify(cards_unlearned));
