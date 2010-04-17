@@ -38,7 +38,7 @@ This script/app is designed to be dead-simple: only basic editing capabilities, 
 * The awesome SM2 algorithm for keeping track of learning progress and spaced intervals to optimize your learning.
 * After initial page load, all data is loaded into the browser - no waiting for additional page loads or AJAX calls!
 * All progress data is stored locally.
-	* Uses localStorage in modern browsers, based on the simple jQuery plugin available here: <http://www.stoimen.com/blog/2010/02/25/jquery-localstorage-plugin/>
+	* Uses localStorage in modern browsers, based on the simple jQuery plugin available [here](http://www.stoimen.com/blog/2010/02/25/jquery-localstorage-plugin/).
 
 Browser support: Firefox 3.5+, Chrome 5+ (ish?), Safari 4+, and MSIE 8+ (needed for localStorage and JSON support). Tested briefly on the iPhone.
 
@@ -67,7 +67,7 @@ Using the wonderful [Fancybox](http://fancybox.net/) for displaying overlaid ima
 
 1. Clone the repo ("git clone http://github.com/brady8/total-recall.git"). Or download the zipped package.
 2. CSV files (format: question, answer) go in the subdirectory 'sets'. Formatted with [Markdown](http://daringfireball.net/projects/markdown/), and raw HTML is fine.
-3. Put the directory somewhere your webserver can get at it: on Macs, /Library/WebServer/Documents is good.
+3. Put the directory somewhere your local webserver can get at it, or upload it to a proper server: on Macs, /Library/WebServer/Documents is good.
 4. Load it up (again, on Macs: http://localhost/).
 5. Done!
 
