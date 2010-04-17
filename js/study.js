@@ -54,7 +54,7 @@ $(function() {
 	function show_edit_button() {
 		$('#edit-question').show();
 		$('#edit-question').click(function() {
-			window.location = 'edit.php?set=' + $set_filename + '&index=' + (typeof(index) == 'undefined' ? '0' : index);
+			window.location = 'edit.php?set=' + $set_name + '&index=' + (typeof(index) == 'undefined' ? '0' : index);
 			return false;
 		});
 	}
@@ -62,9 +62,9 @@ $(function() {
 	function show_reset_button() {
 		$('#reset-database').show();
 		$('#reset-database').click(function() {
-			$.setItem($set_filename, null);
-			$.setItem($set_filename + '_card_counts', null);
-			$.setItem($set_filename + '_date', null);
+			$.setItem($set_name, null);
+			$.setItem($set_name + '_card_counts', null);
+			$.setItem($set_name + '_date', null);
 			$db = null;
 			start_it_up();
 			return false;
@@ -235,9 +235,9 @@ $(function() {
 	}
 
 	function store_data() {
-		$.setItem($set_filename + '_card_counts', [cards_left_today.length, $fc.length]);
-		$.setItem($set_filename + '_date', (new Date()).toDateString());
-		$.setItem($set_filename, $db);
+		$.setItem($set_name + '_card_counts', [cards_left_today.length, $fc.length]);
+		$.setItem($set_name + '_date', (new Date()).toDateString());
+		$.setItem($set_name, $db);
 	}
 
 	function calculate_progress() {
@@ -253,7 +253,7 @@ $(function() {
 	function load_data() {
 		if (!$db || $db.length == 0) {
 			try {
-				$db = $.getItem($set_filename) || [];
+				$db = $.getItem($set_name) || [];
 			} catch (SyntaxError) {
 				$db = [];
 			}

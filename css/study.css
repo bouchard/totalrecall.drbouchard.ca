@@ -41,16 +41,21 @@ h1 {
 
 #set-list {
 	margin: auto;
-	padding: 20px 20px;
+	padding: 30px 30px 10px 30px;
 	border: 8px solid #3290fe;
 	font-size: 1.8em;
+}
+
+#set-list h2 {
+	margin: 0;
+	padding: 0;
 }
 
 #set-list ul {
 	text-align: center;
 	list-style-type: none;
 	font-size: 0.7em;
-	margin: 0;
+	margin: 10px 0 20px 0;
 	padding: 0;
 }
 
@@ -103,7 +108,7 @@ h1 {
 }
 
 /* Stop studying, and also used for the 'edit question' title. */
-#stop-it, #edit-title {
+#stop-it {
 	margin-top: 20px;
 	border: 1px solid #eee;
 	padding: 10px;
@@ -118,40 +123,9 @@ h1 {
 #stop-it a { color: #ccc; }
 #stop-it a:hover { border-bottom-color: #ccc; }
 
-#edit-title {
-	margin-top: 30px;
-	border: 1px solid #eee;
-}
-
-/* Nav arrows for navigating in edit mode. */
-#edit-title h1 {
-	font-size: 14px;
-	line-height: 20px;
-	display: block;
-	margin: 3px auto;
-	text-align: center;
-	font-weight: bold;
-}
-
-#edit-title a.nav-arrows {
-	display: block;
-	font-size: 20px;
-	line-height: 20px;
-	margin: 0;
-	padding: 0px 10px;
-}
-
-#edit-title a.left-arrow {
-	float: left;
-}
-
-#edit-title a.right-arrow {
-	float: right;
-}
-
 /* Question box. */
-#question-box, #answer-box, #question-edit-box, #answer-edit-box { text-align: center; }
-#question-content, #answer-content, #question-edit-content, #answer-edit-content {
+#question-box, #answer-box { text-align: center; }
+#question-content, #answer-content {
 	border: 8px solid;
 	padding: 20px;
 	font-size: 2.5em;
@@ -162,11 +136,9 @@ h1 {
 }
 
 #question-content p, #answer-content p { margin: 0.5em; }
-#question-content, #question-edit-content { border-color: #3290fe; }
-#answer-content, #answer-edit-content { border-color: #fa931e; }
+#question-content { border-color: #3290fe; }
+#answer-content { border-color: #fa931e; }
 #answer-box { display: none; }
-
-#question-edit-content, #answer-edit-content { border: 0; padding-top: 0; padding-bottom: 0; height: 200px; }
 
 #question-content ul, #answer-content ul, #question-content ol, #answer-content ol {
 	margin: 0.5em auto;

@@ -53,7 +53,7 @@ Using the wonderful [Fancybox](http://fancybox.net/) for displaying overlaid ima
 1. Click the '**Downloads**' button at the top of this page on Github, and download the latest packaged version.
 2. Unzip the file you just downloaded (on Macs, this happens automatically).
 3. Create a subdirectory named 'sets' within the folder you just unzipped.
-3. Each set of flash cards will be stored a separate CSV (*comma-separated value*) file, with the format "question, answer" in the 'sets' subdirectory. Your CSV files must have the extension '.csv'. You can create CSV files easily in Microsoft Excel - just choose 'CSV (Comma-separated values)' as the format when you go to save the file.
+3. Each set of flash cards will be stored a separate CSV (*comma-separated value*) file, with the format "question, answer" in the 'sets' subdirectory. Your CSV files must have the extension '.xml'. You can create CSV files easily in Microsoft Excel - just choose 'CSV (Comma-separated values)' as the format when you go to save the file.
 	* Anything you type will be displayed as-is - if you want bullet lists, etc., read the next bullet point:
 	* Questions and answers are formatted with [Markdown](http://daringfireball.net/projects/markdown/): you can use HTML as well if you like for formatting, include image links, etc.
 4. Put the directory somewhere that a webserver can get at it:

@@ -27,11 +27,12 @@
 #
 # See the README (README.markdown) for more information.
 
+error_reporting(E_ALL);
 
 # Configuration (is editing allowed?)
 require_once('config.php');
-# The CSV handling class.
-require_once('lib/CSV.php');
+# The XML Parser.
+require_once('lib/XML.php');
 # Allow PHP to choose the line break depending on the operating system.
 ini_set('auto_detect_line_endings', true);
 # Safari chokes on unicode characters unless this is here.
@@ -42,15 +43,14 @@ class Navigation {
 	public $action;			# The current user action.
 	public $page_title;
 	public $study_data;
-	public $csv;			# A handle to an instance of the CSV class.
-	public $filename;		# Filename of the current CSV file.
+	public $xml;			# A handle to an instance of the CSV class.
 	public $start_index;	# Which card do we want to start with?
 
 	function __construct() {
-		$this->csv = new CSV;
+		$this->xml = new XMLParser;
+		$this->xml->generate_sets();
 		$this->action = (strlen($_SERVER['QUERY_STRING']) > 0 ? 'study' : 'choose');
 		$qs = preg_split('/&/', $_SERVER['QUERY_STRING']);
-		$this->filename = (isset($qs[0]) && strlen($qs[0]) > 0 ? $qs[0] : null);
 		$this->start_index = (isset($qs[1]) && strlen($qs[1]) > 0 ? $qs[1] : null);
 		switch ($this->action) {
 			case 'study':
@@ -65,7 +65,7 @@ class Navigation {
 	}
 
 	function study() {
-		if ($this->study_data = $this->csv->open_study_data($this->filename)) {
+		if ($this->study_data = $this->xml->open_study_data($this->filename)) {
 			$this->page_title = 'Studying: ' . $this->study_data['title'];
 		} else {
 			$this->error = 'Invalid study set.';
@@ -125,7 +125,7 @@ $nav = new Navigation;
 <?php
 if (count($nav->study_data['questions']) > 0) {
 	echo "var \$fc = " . json_encode($nav->study_data['questions']) . ";\n";
-	echo "var \$set_filename = " . json_encode($nav->filename) . ";\n";
+	echo "var \$set_name = " . json_encode($nav->filename) . ";\n";
 	if (isset($nav->start_index)) {
 		echo "var \$start_index = " . json_encode($nav->start_index) . ";\n";
 	}
@@ -143,26 +143,23 @@ if (count($nav->study_data['questions']) > 0) {
 	<div id="reset-database" style="display: none;">
 		<a href="#">reset progress</a>
 	</div>
-	<?php if (ALLOW_EDITING || $_SERVER['HTTP_HOST'] == 'localhost') : ?>
-	<div id="edit-question" style="display: none;">
-		<a href="#">edit this question</a>
-	</div>
-	<?php endif; ?>
 </div>
 <?php
 
 	if ($nav->action == 'choose') {
 		echo "<h1>$nav->page_title</h1>\n";
-		$file_list = $nav->csv->list_files();
 		echo "<div id=\"set-list\">\n";
-		if (count($file_list) > 0) {
-			echo "<ul>\n";
-			foreach ($file_list as $file) {
-				echo "<li><a href=\"?" . urlencode(pathinfo($file, PATHINFO_FILENAME)) . "\" rel=\"" . urlencode(pathinfo($file, PATHINFO_FILENAME)) . "\">" . $nav->csv->humanize(pathinfo($file, PATHINFO_FILENAME)) . "</a></li>\n";
+		if (count($nav->xml->sets) > 0) {
+			foreach ($nav->xml->sets as $category => $sets) {
+				echo "<h2>" . $category . "</h2>\n";
+				echo "<ul>\n";
+				foreach ($sets as $set) {
+					echo "<li><a href=\"?" . urlencode($set[0]) . "\" rel=\"" . urlencode($set[0]) . "\">" . $set[1] . "</a></li>\n";
+				}
+				echo "</ul>\n";
 			}
-			echo "</ul>\n";
 		} else {
-			echo 'You don\'t have any study sets available in the directory ' . $nav->csv->directory . "\n";
+			echo 'You don\'t have any study sets available in the directory ' . $nav->xml->directory . "\n";
 		}
 		echo "</div>\n";
 	} elseif ($nav->action == 'study') {
