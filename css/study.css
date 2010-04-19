@@ -108,7 +108,7 @@ h1 {
 }
 
 /* Stop studying, and also used for the 'edit question' title. */
-#stop-it {
+#stop-it, #more-info {
 	margin-top: 20px;
 	border: 1px solid #eee;
 	padding: 10px;
@@ -122,10 +122,12 @@ h1 {
 }
 #stop-it a { color: #ccc; }
 #stop-it a:hover { border-bottom-color: #ccc; }
+#more-info { border-color: #333; }
+#more-info a { color: #333; }
 
 /* Question box. */
 #question-box, #answer-box { text-align: center; }
-#question-content, #answer-content {
+#question-content, #answer-content, #more-info-content {
 	border: 8px solid;
 	padding: 20px;
 	font-size: 2.5em;
@@ -139,6 +141,8 @@ h1 {
 #question-content { border-color: #3290fe; }
 #answer-content { border-color: #fa931e; }
 #answer-box { display: none; }
+#more-info-content { font-size: 1.9em; height: auto; border-color: #ff0043; }
+#more-info-content a, #more-info-content a:visited { color: #ff0043; }
 
 #question-content ul, #answer-content ul, #question-content ol, #answer-content ol {
 	margin: 0.5em auto;

@@ -45,13 +45,17 @@ class Navigation {
 	public $study_data;
 	public $xml;			# A handle to an instance of the CSV class.
 	public $start_index;	# Which card do we want to start with?
+	public $cat_id;
+	public $set_id;
 
 	function __construct() {
 		$this->xml = new XMLParser;
-		$this->xml->generate_sets();
+		$this->xml->generate_list();
 		$this->action = (strlen($_SERVER['QUERY_STRING']) > 0 ? 'study' : 'choose');
 		$qs = preg_split('/&/', $_SERVER['QUERY_STRING']);
-		$this->start_index = (isset($qs[1]) && strlen($qs[1]) > 0 ? $qs[1] : null);
+		$this->start_index = (isset($qs[2]) && strlen($qs[2]) > 0 ? $qs[2] : null);
+		$this->set_id = (isset($qs[1]) && strlen($qs[1]) > 0 ? $qs[1] : null);
+		$this->cat_id = (isset($qs[0]) && strlen($qs[0]) > 0 ? $qs[0] : null);
 		switch ($this->action) {
 			case 'study':
 				$this->study();
@@ -65,7 +69,7 @@ class Navigation {
 	}
 
 	function study() {
-		if ($this->study_data = $this->xml->open_study_data($this->filename)) {
+		if ($this->study_data = $this->xml->open_study_data($this->cat_id, $this->set_id)) {
 			$this->page_title = 'Studying: ' . $this->study_data['title'];
 		} else {
 			$this->error = 'Invalid study set.';
@@ -125,7 +129,8 @@ $nav = new Navigation;
 <?php
 if (count($nav->study_data['questions']) > 0) {
 	echo "var \$fc = " . json_encode($nav->study_data['questions']) . ";\n";
-	echo "var \$set_name = " . json_encode($nav->filename) . ";\n";
+	echo "var \$cat_id = " . json_encode($nav->cat_id) . ";\n";
+	echo "var \$set_id = " . json_encode($nav->set_id) . ";\n";
 	if (isset($nav->start_index)) {
 		echo "var \$start_index = " . json_encode($nav->start_index) . ";\n";
 	}
@@ -149,26 +154,42 @@ if (count($nav->study_data['questions']) > 0) {
 	if ($nav->action == 'choose') {
 		echo "<h1>$nav->page_title</h1>\n";
 		echo "<div id=\"set-list\">\n";
-		if (count($nav->xml->sets) > 0) {
-			foreach ($nav->xml->sets as $category => $sets) {
-				echo "<h2>" . $category . "</h2>\n";
-				echo "<ul>\n";
-				foreach ($sets as $set) {
-					echo "<li><a href=\"?" . urlencode($set[0]) . "\" rel=\"" . urlencode($set[0]) . "\">" . $set[1] . "</a></li>\n";
+		if (count($nav->xml->categories) > 0) {
+			foreach($nav->xml->categories as $cat_id => $cat_data) {
+				echo "<h2>" . $cat_data[0] . "</h2>\n";
+				if (count($nav->xml->sets[$cat_id]) > 0) {
+					echo "<ul>\n";
+					foreach ($nav->xml->sets[$cat_id] as $set_id => $set_data) {
+						echo "<li><a href=\"?" . urlencode($cat_id) . "&" . urlencode($set_id) . "\" rel=\"" . urlencode($cat_id) . "_" . urlencode($set_id) . "\">" . $set_data[0] . "</a></li>\n";
+					}
+					echo "</ul>\n";
+				} else {
+					echo "You don't have any study sets in this category.\n";
 				}
-				echo "</ul>\n";
 			}
 		} else {
-			echo 'You don\'t have any study sets available in the directory ' . $nav->xml->directory . "\n";
+			echo 'You don\'t have any categories available in the directory ' . $nav->xml->directory . "\n";
 		}
 		echo "</div>\n";
 	} elseif ($nav->action == 'study') {
 ?>
 <div id="progress-bar" style="display: none;">
 </div>
+
 <div id="stop-it">
-	<a href="./">stop studying</a>
+	<a href="./" id="stop-it-link">stop studying</a>
 </div>
+
+<div id="more-info" style="display: none;">
+	<a id="show-more-info" href="#">more information about this topic (space)</a>
+</div>
+
+<div id="more-info-box" style="display: none;">
+	<div id="more-info-content">
+		more information...
+	</div>
+</div>
+
 <div id="question-box">
 	<div id="question-content">
 		sorry, but you need to enable javascript for this to work.

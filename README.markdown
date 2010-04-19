@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ------------------------------------------------------------------
 
-This script/app is designed to be dead-simple: only basic editing capabilities, no user accounts, no extras - just a simple, beautiful interface for learning.
+This script/app is designed to be dead-simple: no editing, no user accounts, no extras - just a simple, beautiful interface for learning.
 
 ### Features:
 
@@ -53,7 +53,7 @@ Using the wonderful [Fancybox](http://fancybox.net/) for displaying overlaid ima
 1. Click the '**Downloads**' button at the top of this page on Github, and download the latest packaged version.
 2. Unzip the file you just downloaded (on Macs, this happens automatically).
 3. Create a subdirectory named 'sets' within the folder you just unzipped.
-3. Each set of flash cards will be stored a separate CSV (*comma-separated value*) file, with the format "question, answer" in the 'sets' subdirectory. Your CSV files must have the extension '.xml'. You can create CSV files easily in Microsoft Excel - just choose 'CSV (Comma-separated values)' as the format when you go to save the file.
+3. On startup, any XML files you have in your 'sets' directory will be loaded. The XML files have a very simple format, which is detailed further down.
 	* Anything you type will be displayed as-is - if you want bullet lists, etc., read the next bullet point:
 	* Questions and answers are formatted with [Markdown](http://daringfireball.net/projects/markdown/): you can use HTML as well if you like for formatting, include image links, etc.
 4. Put the directory somewhere that a webserver can get at it:
@@ -66,14 +66,37 @@ Using the wonderful [Fancybox](http://fancybox.net/) for displaying overlaid ima
 #### Quick Setup for Advanced Users:
 
 1. Clone the repo ("git clone http://github.com/brady8/total-recall.git"). Or download the zipped package.
-2. CSV files (format: question, answer) go in the subdirectory 'sets'. Formatted with [Markdown](http://daringfireball.net/projects/markdown/), and raw HTML is fine.
+2. XML files (format described below) go in the subdirectory 'sets'. Formatted with [Markdown](http://daringfireball.net/projects/markdown/), and raw HTML is fine.
 3. Put the directory somewhere your local webserver can get at it, or upload it to a proper server: on Macs, /Library/WebServer/Documents is good.
 4. Load it up (again, on Macs: http://localhost/).
 5. Done!
 
+### XML File Format
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<flashcards>
+		<categories>
+			<category name="Anatomy" order="1" id="1">
+				<set name="Anatomy 101" id="1"/>
+				<set name="Anatomy 102" id="2"/>
+			</category>
+			<category name="Physiology" order="2" id="2">
+				<set name="Physiology 101" order="1" id="5"/>
+				<set name="Physiology 102" order="2" id="8"/>
+				<set name="Physiology 103" order="3" id="7"/>
+			</category>
+		</categories>
+		<cards>
+			<card id="1">
+				<question>The **internal thoracic arteries** continue inferiorly as the _____.</question>
+				<answer>Superior epigastric arteries</answer>
+				<moreinfo>The superior epigastric arteries are an important site for anastomoses when blockage occurs in the inferior vena cava.</moreinfo>
+				<associated_sets>1,2</associated_sets>
+			</card>
+		</cards>
+	</flashcards>
+
 ### TODO:
 
-1. More robust editing capabilities:
-	* Creating/deleting entire sets.
-2. Explicit support for mobile browsers:
+1. Explicit support for mobile browsers:
 	* Works on the iPhone, but could be optimized.

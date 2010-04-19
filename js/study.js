@@ -12,6 +12,7 @@ $(function() {
 	var cards_unlearned; // Cards with an EF < 4.0.
 	var $db; // The database (stores easiness factor and next study date).
 	var progress; // Progress (percentage) for today.
+	var currImage = null;
 
 	// Internet Explorer is a piece of shit.
 	if(!Array.indexOf) {
@@ -35,7 +36,26 @@ $(function() {
 			} else {
 				$(document).keypress(function(e) {
 					switch(e.which) {
-						case 32: $('#show-answer').click(); return false; break;
+						case 32:
+							if ($('#more-info').css('display') != 'none') {
+								$('#show-more-info').click();
+							} else {
+								$('#show-answer').click();
+							}
+							return false;
+						break;
+						case 105:
+						if ($('#answer-box').css('display') != 'none') {
+							if (currImage == null) {
+								currImage = $('#answer-box a.fancybox:first');
+								currImage.click();
+							} else {
+								currImage = null;
+								$.fancybox.close();
+							}
+						}
+							return false;
+						break;
 						case 106: $('#1').click(); return false; break;
 						case 107: $('#2').click(); return false; break;
 						case 108: $('#3').click(); return false; break;
@@ -54,7 +74,7 @@ $(function() {
 	function show_edit_button() {
 		$('#edit-question').show();
 		$('#edit-question').click(function() {
-			window.location = 'edit.php?set=' + $set_name + '&index=' + (typeof(index) == 'undefined' ? '0' : index);
+			window.location = 'edit.php?set=' + $cat_id + '_' + $set_id + '&index=' + (typeof(index) == 'undefined' ? '0' : index);
 			return false;
 		});
 	}
@@ -62,11 +82,11 @@ $(function() {
 	function show_reset_button() {
 		$('#reset-database').show();
 		$('#reset-database').click(function() {
-			$.setItem($set_name, null);
-			$.setItem($set_name + '_card_counts', null);
-			$.setItem($set_name + '_date', null);
+			$.setItem($cat_id + '_' + $set_id, null);
+			$.setItem($cat_id + '_' + $set_id + '_card_counts', null);
+			$.setItem($cat_id + '_' + $set_id + '_date', null);
 			$db = null;
-			start_it_up();
+			window.location.reload();
 			return false;
 		});
 	}
@@ -84,9 +104,17 @@ $(function() {
 		show_edit_button();
 		$('#question-content').html($fc[index][0]);
 		$('#answer-content').html($fc[index][1]);
+		$('#more-info-content').html($fc[index][2]);
 		$('#answer-box').hide();
 		$('#question-box').show();
+		$('#more-info-box').hide();
 		parse_with_fancybox();
+		parse_links();
+	}
+
+	// Parse links so they all open in new windows, because we don't want to wreck the study session.
+	function parse_links() {
+		$('a[id!=stop-it-link]').each(function() { $(this).attr('target', '_blank'); });
 	}
 
 	// Any images in the question/answer pairs are removed,
@@ -117,7 +145,23 @@ $(function() {
 		if($('#answer-box').css('display') == 'none') {
 			$('#question-box').hide();
 			$('#answer-box').show();
-			parse_with_fancybox();
+			if ($('#more-info-content').html().length > 1) {
+				$('#stop-it').hide();
+				$('#more-info').show();
+			}
+		}
+		return false;
+	});
+
+	$('#show-more-info').click(function() {
+		if ($('#more-info-box').css('display') == 'none') {
+			$('#answer-box').slideUp();
+			$('#more-info-box').slideDown();
+			$(this).html('back to the answer (space)');
+		} else {
+			$('#answer-box').slideDown();
+			$('#more-info-box').slideUp();
+			$(this).html('more information about this topic (space)');
 		}
 		return false;
 	});
@@ -235,9 +279,9 @@ $(function() {
 	}
 
 	function store_data() {
-		$.setItem($set_name + '_card_counts', [cards_left_today.length, $fc.length]);
-		$.setItem($set_name + '_date', (new Date()).toDateString());
-		$.setItem($set_name, $db);
+		$.setItem($cat_id + '_' + $set_id + '_card_counts', [cards_left_today.length, $fc.length]);
+		$.setItem($cat_id + '_' + $set_id + '_date', (new Date()).toDateString());
+		$.setItem($cat_id + '_' + $set_id, $db);
 	}
 
 	function calculate_progress() {
@@ -253,7 +297,7 @@ $(function() {
 	function load_data() {
 		if (!$db || $db.length == 0) {
 			try {
-				$db = $.getItem($set_name) || [];
+				$db = $.getItem($cat_id + '_' + $set_id) || [];
 			} catch (SyntaxError) {
 				$db = [];
 			}

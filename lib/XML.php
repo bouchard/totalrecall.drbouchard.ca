@@ -8,6 +8,7 @@ class XMLParser {
 	# Set the directory where your XML files are located here:
 	public $directory = SETS_DIRECTORY;
 	public $file_list;
+	public $categories;
 	public $sets;
 	public $cards;
 
@@ -33,80 +34,50 @@ class XMLParser {
 			foreach($xml->cards->card as $card) {
 				foreach(explode(',', $card->associated_sets) as $id) {
 					if ($id == $set_id) {
-						$this->cards[] = array($card['question'], $card['answer']);
+						$this->cards[] = array("{$card->question}", "{$card->answer}", "{$card->moreinfo}");
 					}
 				}
 			}
 		} else {
 			return false;
 		}
+		return $this->cards;
 	}
 
-	function generate_sets() {
+	function generate_list() {
 		$this->sets = array();
+		$this->categories = array();
 		foreach($this->file_list as $file) {
 			if (($xml = simplexml_load_file($this->directory . urldecode($file))) !== false) {
-				foreach($xml->sets->set as $set) {
-					$c = "{$set['category']}";
-					if (!isset($this->sets[$c])) { $this->sets[$c] = array(); }
-					$this->sets[$c][] = array($set['id'], $set['name']);
+				foreach($xml->categories->category as $category) {
+					$id = "{$category['id']}";
+					$this->categories[$id] = array($category['name'], $category['order']);
+					foreach ($category->set as $set) {
+						$set_id = "{$set['id']}";
+						$this->sets[$id][$set_id] = array($set['name'], $set['order'], urldecode($file));
+					}
 				}
 			} else {
 				return false;
 			}
 		}
-		return $this->sets;
+		return true;
 	}
 
-	function open_study_data($set_name, $formatted = true) {
-		$xml_data = array();
-		if (($handle = @fopen($this->directory . urldecode($filename) . '.xml', "r")) !== false) {
-		    while (($data = fgetxml($handle)) !== false) {
-				if (count($data) == 2 && !preg_match('/^#/i', $data[0])) {
-					if ($formatted) {
-						// Allow for nested list formatting, considering Excel won't
-						// allow tab characters in cells.
-						$data[0] = str_replace("<br />","  \n", $data[0]);
-						$data[0] = preg_replace('/\n\*\*\s/', "\n\t* ", $data[0]);
-						$data[0] = Markdown($data[0]);
-
-						$data[1] = str_replace("<br />","  \n", $data[1]);
-						$data[1] = preg_replace('/\n\*\*\s/', "\n\t* ", $data[1]);
-						$data[1] = Markdown($data[1]);
-					} else {
-						$data[0] = str_replace("<br />", "\n", $data[0]);
-						$data[1] = str_replace("<br />", "\n", $data[1]);
-					}
-					$xml_data[] = array($data[0], $data[1]);
+	function open_study_data($cat_id, $set_id) {
+		if ($this->cards_in_set($this->sets[$cat_id][$set_id][2], $set_id)) {
+			foreach($this->cards as &$card) {
+				foreach($card as &$element) {
+					$element = str_replace('\n',"\n", $element);
+					$element = str_replace("<br />","  \n", $element);
+					$element = preg_replace('/\n\*\*\s/', "\n\t* ", $element);
+					$element = Markdown($element);
 				}
-		    }
-		    fclose($handle);
-			return array('title' => $this->humanize($filename), 'questions' => $xml_data);
-		} else {
-			return false;
-		}
-	}
-
-	function write_study_data($filename, $study_data) {
-		@chmod($this->directory . urldecode($filename) . '.xml', 0664);
-		@chmod($this->directory . urldecode($filename) . '.xml', 0666);
-		if (($handle = @fopen($this->directory . urldecode($filename) . '.xml', "w")) !== false) {
-			foreach($study_data['questions'] as $line) {
-				$line[0] = str_replace("<br /><br />", "\n\n", $line[0]);
-				$line[0] = str_replace("<br />", "  \n", $line[0]);
-				$line[1] = str_replace("<br /><br />", "\n\n", $line[1]);
-				$line[1] = str_replace("<br />", "  \n", $line[1]);
-				fputxml($handle, $line);
 			}
-			fclose($handle);
-			return true;
+			return array('title' => $this->sets[$cat_id][$set_id][0], 'questions' => $this->cards);
 		} else {
 			return false;
 		}
-	}
-
-	function humanize($str) {
-		return ucwords(preg_replace('/[_+]/i', ' ', $str));
 	}
 
 }
