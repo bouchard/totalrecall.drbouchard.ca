@@ -1,30 +1,12 @@
 # Total Recall
+
 ### Flash card memorization webapp.
 
 **Stand-alone PHP script for Flash Cards with a Javascript interface and logic**
 
-*By: Brady Bouchard*
+*By: Dr. Brady Bouchard*
 
-Development continues at: <http://github.com/brady8/total-recall>
-
-------------------------------------------------------------------
-
-Copyright Brady Bouchard 2010.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-------------------------------------------------------------------
+Development continues at: <https://github.com/bouchard/totalrecall.drbouchard.ca>
 
 This script/app is designed to be dead-simple: no editing, no user accounts, no extras - just a simple, beautiful interface for learning.
 
@@ -36,7 +18,7 @@ This script/app is designed to be dead-simple: no editing, no user accounts, no 
 * All progress data is stored locally.
 	* Uses localStorage in modern browsers, based on the simple jQuery plugin available [here](http://www.stoimen.com/blog/2010/02/25/jquery-localstorage-plugin/).
 
-Browser support: Firefox 3.5+, Chrome 5+ (ish?), Safari 4+, and MSIE 8+ (needed for localStorage and JSON support). Tested briefly on the iPhone.
+Browser support: All modern browsers. Tested briefly on the iPhone.
 
 Inspiration from the beautiful stylings of cramberry.net.
 

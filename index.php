@@ -2,13 +2,13 @@
 #
 # Total Recall - the flash card webapp.
 # Stand-alone PHP script for Flash Cards with a Javascript interface and logic.
-# By: Brady Bouchard
-# brady@bradybouchard.ca
-# Available at: http://github.com/brady8/total-recall
+# By: Dr. Brady Bouchard
+# brady@thewellinspired.com
+# Available at: https://github.com/bouchard/totalrecall.drbouchard.ca
 #
 # ------------------------------------------------------------------
 #
-# Copyright Brady Bouchard 2010.
+# Copyright Dr. Brady Bouchard 2016.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -89,14 +89,15 @@ $nav = new Navigation;
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width = 660" />
-<meta name="author" content="Brady Bouchard; http://github.com/brady8/total-recall" />
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<meta name="viewport" content="width = 660">
+<meta name="author" content="Dr. Brady Bouchard; https://github.com/bouchard/totalrecall.drbouchard.ca">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
 <title>Total Recall - <?php echo $nav->page_title; ?></title>
-<link href="css/base.css" rel="stylesheet" type="text/css" />
-<link href="css/study.css" rel="stylesheet" type="text/css" />
-<link href="js/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css" />
+<link href="css/base.css" rel="stylesheet" type="text/css">
+<link href="css/study.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="js/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet" type="text/css">
 <script src="js/jquery.js" type="text/javascript"></script>
 <script src="js/jquery.jstore.js" type="text/javascript"></script>
 <script src="js/study.js" type="text/javascript"></script>
@@ -224,25 +225,13 @@ if (count($nav->study_data['questions']) > 0) {
 
 <?php if ($nav->action == 'choose') : ?>
 <div id="footer">
-<p><a href="http://github.com/brady8/total-recall">Total Recall</a>, developed by <a href="mailto:brady@lunardawn.ca">Brady Bouchard</a>.</p>
-<p>Requires <strong>Firefox 3.5+</strong>, <strong>Chrome 5+ (ish?)</strong>, <strong>Safari 4+</strong>, or <strong>MSIE 8+</strong>.<br />Works in <strong>Firefox 3.0</strong> too, but no memorization data is saved.</p>
-<p>Using the SM-2 algorithm for <a href="http://en.wikipedia.org/wiki/Spaced_repetition">spaced interval learning</a>.<br />The frequency with which cards are shown is based on how you do on previous attempts.</p>
-<?php if (ADD_SUBMIT_LINK || $_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == 'totalrecall.bradybouchard.ca') { ?>
+<p><a href="http://github.com/brady8/total-recall">Total Recall</a>, developed by <a href="mailto:brady@thewellinspired.com">Dr. Brady Bouchard</a>.</p>
+<p>Requires <strong>a modern browser</strong>.</p>
+<p>Using the SM-2 algorithm for <a href="http://en.wikipedia.org/wiki/Spaced_repetition">spaced interval learning</a>.<br>The frequency with which cards are shown is based on how you do on previous attempts.</p>
+<?php if (ADD_SUBMIT_LINK || $_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == 'totalrecall.drbouchard.ca') { ?>
 <p>If you have flash cards to contribute or corrections to those already here, please feel free to <a href="mailto:<?php echo (CONTRIB_EMAIL_LINK); ?>">email</a> me!</p>
 <?php } ?>
 </div>
-<?php endif; ?>
-
-<?php if ($_SERVER['HTTP_HOST'] != 'localhost' && GOOGLE_ANALYTICS_CODE) : ?>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("<?php echo(GOOGLE_ANALYTICS_CODE); ?>");
-pageTracker._trackPageview();
-} catch(err) {}</script>
 <?php endif; ?>
 
 </body>
